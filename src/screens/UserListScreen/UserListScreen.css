@@ -1,0 +1,66 @@
+body {
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, sans-serif;
+}
+
+.bloco {
+    width: 100%;
+    height: 110px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+main > div > h1 {
+    margin: 50px 65px;
+}
+
+main > div > button {
+    width: 180px;
+    height: 30px;
+    background-image: linear-gradient(to bottom, #000000, #0d0d0d);
+    border: 1px solid #353535;
+    border-radius: 5px;
+    color: #fff;
+    margin: 70px;
+}
+
+main > div > button:hover {
+    padding: 1px;
+    border: 1px solid #666;
+    background-image: linear-gradient(to bottom, #171717, #0d0d0d);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse; 
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .titulo-tabela {
+    font-size: 18px;
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .botao-editar {
+    border: 0px;
+    border-radius: 50%;
+  }
+
+.botao-editar:hover {
+    color: #c23d3d;
+}
