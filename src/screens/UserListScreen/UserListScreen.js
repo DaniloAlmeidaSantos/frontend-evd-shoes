@@ -2,7 +2,7 @@ import './UserListScreen.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function UserListScreen() {
-    return(
+    return (
         <body>
             <main class="bloco">
                 <div>
@@ -26,8 +26,8 @@ function UserListScreen() {
                         <td>E-mail</td>
                         <td>Grupo</td>
                         <td>
-                            <input type="radio" id="on" value="1">on
-                            <input type="radio" id="off" value="0">off
+                            <input type="radio" id="on" value="1" />on
+                            <input type="radio" id="off" value="0" />off
                         </td>
                         <td>
                             <button class="botao-editar"><i class="fa fa-solid fa-pen"></i></button>
@@ -38,8 +38,8 @@ function UserListScreen() {
                         <td>E-mail</td>
                         <td>Grupo</td>
                         <td>
-                            <input type="radio" id="on" value="1">on
-                            <input type="radio" id="off" value="0">off
+                            <input type="radio" id="on" value="1" />on
+                            <input type="radio" id="off" value="0" />off
                         </td>
                         <td>
                             <button class="botao-editar"><i class="fa fa-solid fa-pen"></i></button>
@@ -50,8 +50,8 @@ function UserListScreen() {
                         <td>E-mail</td>
                         <td>Grupo</td>
                         <td>
-                            <input type="radio" id="on" value="1">on
-                            <input type="radio" id="off" value="0">off
+                            <input type="radio" id="on" value="1" />
+                            <input type="radio" id="off" value="0" />
                         </td>
                         <td>
                             <button class="botao-editar"><i class="fa fa-solid fa-pen"></i></button>
@@ -59,7 +59,7 @@ function UserListScreen() {
                     </tr>
                 </table>
             </section>
-    </body>
+        </body>
     );
 }
 
