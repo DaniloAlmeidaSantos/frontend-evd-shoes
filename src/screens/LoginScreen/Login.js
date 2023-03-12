@@ -1,84 +1,70 @@
 import './Login.css';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const [formValues, setFormValues] = useState({});
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    let response = await fetch(
+      'http://localhost:8080/backoffice/user/login',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json'
+        }
+      }
+    )
+
+    if (response.status === 200) {
+      response.json().then(resp => {
+        navigate('/home-backoffice', { state: resp });
+      })
+    } else {
+      alert('Erro ao autenticar: Credenciais incorretas, ou usuário inativo. Valide com o administrador do sistema');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
   return (
-    <body>
-      <nav class="menu">
-
-      </nav>
-      <article class="conteudo">
-        <section class="bloco">
-          <div class="titulo-centro">
-            <div class="imgem-texto">
-              <h1>EVD Shoes</h1>
-            </div>
-            <div class="imagem-texto">
-            </div>
-            <p>realize dreams</p>
+    <main class="container">
+      <section class="bloco">
+        <div class="titulo-centro">
+          <div class="imgem-texto">
+            <h1>EVD Shoes</h1>
           </div>
-        </section>
+          <div class="imagem-texto">
+          </div>
+          <p>realize dreams</p>
+        </div>
+      </section>
 
-        <section class="bloco">
-          <form class="formulario" action="">
-            <div class="sessao-input">
-              <input class="input" type="text" placeholder="username" />
-            </div>
-            <div class="sessao-input">
-              <input class="input" type="password" placeholder="password" />
-            </div>
-            <div class="bloco-botao">
-              <button class="botao">Login</button>
-              <button class="botao">Resgister</button>
-            </div>
-            <a href="" target="_blank">esqueci minha senha</a>
-          </form>
-        </section>
-
-        <section class="bloco">
-
-        </section>
-      </article>
-      <footer class="rodape">
-        <div class="box">
-          <p>Sobre a EVD Shoes</p>
-          <p>Política de Privacidade</p>
-          <p>Trabalhe conosco</p>
-          <p>testando</p>
-        </div>
-        <div class="box">
-          <p>Trocas e devoluções</p>
-          <p>Entregas</p>
-          <p>Como comprar</p>
-          <p>Acessibilidade</p>
-        </div>
-        <div class="box">
-          <p>Central de relacionamento</p>
-          <p>testando</p>
-          <p>testando</p>
-          <p>testando</p>
-        </div>
-        <div class="box">
-          <p>Redes sociais</p>
-          <p><i class="devicon-facebook-plain"></i> Facebook</p>
-          <p><i class="devicon-twitter-original"></i> Twitter</p>
-          <p><i class="devicon-linkedin-plain"></i> Linkedin</p>
-        </div>
-      </footer>
-      <hr/>
-      <footer class="rodape-direitos">
-        <div class="box">
-          <span>
-            Copyright © 2023 Todos os direitos reservados
-          </span>
-        </div>
-        <div class="box">
-          EVD Shoes
-        </div>
-        <div class="box">
-          <p>Políticas de privacidade</p>
-        </div>
-      </footer>
-    </body>
+      <section class="bloco">
+        <form class="formulario" onSubmit={handleSubmit}>
+          <div class="sessao-input">
+            <input class="input" name="email" type="email" placeholder="E-mail" onChange={handleInputChange} value={formValues.email || ''} required maxLength={120} />
+          </div>
+          <div class="sessao-input">
+            <input class="input" name="password" type="password" placeholder="Senha" onChange={handleInputChange} value={formValues.password || ''} required maxLength={16} />
+          </div>
+          <div class="bloco-botao">
+            <input type="submit" value="Acessar" class="botao" />
+            <input type="submit" value="Cadastrar" class="botao" />
+          </div>
+          <a href="" target="_blank">esqueci minha senha</a>
+        </form>
+      </section>
+    </main>
   );
 }
 

@@ -1,9 +1,8 @@
 import './UserListScreen.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function UserListScreen() {
     return (
-        <body>
+        <div class="container">
             <main class="bloco">
                 <div>
                     <h1>Lista de usuários</h1>
@@ -59,7 +58,7 @@ function UserListScreen() {
                     </tr>
                 </table>
             </section>
-        </body>
+        </div>
     );
 }
 
