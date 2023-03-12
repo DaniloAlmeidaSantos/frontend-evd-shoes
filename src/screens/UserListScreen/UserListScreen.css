@@ -1,14 +1,19 @@
-.container {
-  margin: 0;
-  font-size: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+.top-header {
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  display: flex;
   align-items: center;
-  margin-left: 5%;
-  margin-right: 5%;
+  justify-content: space-between;
+}
+
+body {
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  align-items: center;
+  justify-content: center;
 }
 
 .bloco {
@@ -39,23 +44,6 @@ main>div>button:hover {
   background-image: linear-gradient(to bottom, #171717, #0d0d0d);
   transition: 0.3s;
   cursor: pointer;
-}
-
-table {
-  width: 100%;
-  margin: auto;
-  border-collapse: collapse;
-}
-
-td,
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
 }
 
 .titulo-tabela {
