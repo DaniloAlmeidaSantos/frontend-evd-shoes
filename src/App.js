@@ -11,8 +11,7 @@ function App() {
                 <Route path="/" element={<LoginScreen />} />
                 <Route path="/home-backoffice" element={<BackofficeHomeScreen />} />
                 <Route path="/backoffice/users/list" element={<UserListScreen />} />
-                <Route path="/backoffice/user/register" element={<BackofficeUser/>} />
-                <Route path="/backoffice/user/update" element={<BackofficeUser/>} />
+                <Route path="/backoffice/user/register/:id?" element={<BackofficeUser/>} />
             </Routes>
         </div>
     );
