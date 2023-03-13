@@ -2,10 +2,14 @@
 .top-header {
   margin-left: auto;
   margin-right: auto;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.subtop-header {
+  justify-content: space-between;
+  margin: auto;
 }
 
 body {
@@ -46,18 +50,48 @@ main>div>button:hover {
   cursor: pointer;
 }
 
-.titulo-tabela {
-  font-size: 18px;
-  border: 1px solid #dddddd;
+table {
+  margin: auto;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+table>tr>th {
+  background: #999;
   text-align: left;
-  padding: 8px;
+  border: 1px solid #666;
+}
+
+table>tr>td {
+  border: 1px solid #666;
+}
+
+.btn {
+  border: 0px;
+  border-radius: 4px;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  color: #000;
+  border-color: #000;
 }
 
 .botao-editar {
-  border: 0px;
-  border-radius: 50%;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: red;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 12px;
+  padding: 2px;
+  width: 70%;
+  cursor: pointer;
+  margin: auto;
 }
 
-.botao-editar:hover {
-  color: #c23d3d;
+.botao-editar:hover span {
+  color: #000;
+  transition: 0.5s;
 }

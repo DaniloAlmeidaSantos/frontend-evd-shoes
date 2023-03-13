@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-import BackofficeHomeScreen from "./screens/BackofficeHomeScreen/BackofficeHomeScreen";
+import BackofficeHomeScreen from "./screens/backofficeHomeScreen/BackofficeHomeScreen";
 import LoginScreen from "./screens/LoginScreen/Login";
 import UserListScreen from "./screens/UserListScreen/UserListScreen";
 import BackofficeUser from "./screens/BackofficeUser/BackofficeUser";
