@@ -1,66 +1,107 @@
+
+.top-header {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subtop-header {
+  justify-content: space-between;
+  margin: auto;
+}
+
 body {
-    font-size: 16px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif, sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  align-items: center;
+  justify-content: center;
 }
 
 .bloco {
-    width: 100%;
-    height: 110px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  height: 110px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
 }
 
-main > div > h1 {
-    margin: 50px 65px;
+main>div>h1 {
+  margin: 50px 65px;
 }
 
-main > div > button {
-    width: 180px;
-    height: 30px;
-    background-image: linear-gradient(to bottom, #000000, #0d0d0d);
-    border: 1px solid #353535;
-    border-radius: 5px;
-    color: #fff;
-    margin: 70px;
+main>div>button {
+  width: 180px;
+  height: 30px;
+  background-image: linear-gradient(to bottom, #000000, #0d0d0d);
+  border: 1px solid #353535;
+  border-radius: 5px;
+  color: #fff;
+  margin: 70px;
 }
 
-main > div > button:hover {
-    padding: 1px;
-    border: 1px solid #666;
-    background-image: linear-gradient(to bottom, #171717, #0d0d0d);
-    transition: 0.3s;
-    cursor: pointer;
+main>div>button:hover {
+  padding: 1px;
+  border: 1px solid #666;
+  background-image: linear-gradient(to bottom, #171717, #0d0d0d);
+  transition: 0.3s;
+  cursor: pointer;
 }
 
 table {
-    width: 90%;
-    margin: auto;
-    border-collapse: collapse; 
+  margin: auto;
+  width: 80%;
+  border-collapse: collapse;
 }
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
+table>tr>th {
+  background-image: linear-gradient(to bottom, #999, rgb(187, 187, 187));
+  text-align: center;
+  border: 1px solid #999;
+}
 
-  .titulo-tabela {
-    font-size: 18px;
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
+.status-lbl {
+  margin-left: 12%;
+}
 
-  .botao-editar {
-    border: 0px;
-    border-radius: 50%;
-  }
+table>tr>td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #999;
+}
 
-.botao-editar:hover {
-    color: #c23d3d;
+.group-radio {
+  display: flex;
+}
+
+.btn {
+  border: 0px;
+  border-radius: 4px;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  color: #000;
+  border-color: #000;
+}
+
+.botao-editar {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: red;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 12px;
+  padding: 2px;
+  width: 70%;
+  cursor: pointer;
+  margin: auto;
+}
+
+.botao-editar:hover span {
+  color: #000;
+  transition: 0.5s;
 }
