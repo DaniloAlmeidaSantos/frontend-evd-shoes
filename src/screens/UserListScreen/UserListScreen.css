@@ -57,13 +57,23 @@ table {
 }
 
 table>tr>th {
-  background: #999;
-  text-align: left;
-  border: 1px solid #666;
+  background-image: linear-gradient(to bottom, #999, rgb(187, 187, 187));
+  text-align: center;
+  border: 1px solid #999;
+}
+
+.status-lbl {
+  margin-left: 12%;
 }
 
 table>tr>td {
-  border: 1px solid #666;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #999;
+}
+
+.group-radio {
+  display: flex;
 }
 
 .btn {

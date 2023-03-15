@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-undef */
+import React, { useEffect, useState } from 'react';
 import './UserListScreen.css';
 import { useLocation } from 'react-router-dom';
 
@@ -13,36 +14,12 @@ function UserListScreen() {
     }, [])
 
     async function getData() {
-        const result = await fetch('https://backend-evd-api.herokuapp.com/backoffice/userlist');
+        const result = await fetch('https://backend-evd-api.herokuapp.com/backoffice/user/list');
         const getResults = await result.json();
         setData(getResults);
     }
 
-    /*
-    {dataServices.map((index) => {
-        return (
-            <tr>
-                <td>{index.username}</td>
-                <td>{index.email}</td>
-                <td>{index.tipousu}</td>
-                <td>
-                    <label>
-                        Ativo
-                        <input type="radio" id="on" value="1" />
-                    </label>
-
-                    <label>
-                        Inativo
-                        <input type="radio" id="on" value="1" />
-                    </label>
-                </td>
-                <td>
-                    <button class="botao-editar"><span>Editar</span></button>
-                </td>
-            </tr>
-        );
-      })}
-    */
+    console.log(data)
 
     return (
         <body>
@@ -62,6 +39,29 @@ function UserListScreen() {
                     <th>Status</th>
                     <th>Ações</th>
                 </tr>
+                {data.map((index) => {
+                    return (
+                        <tr>
+                            <td>{index.username}</td>
+                            <td>{index.email}</td>
+                            <td>{index.tipousu}</td>
+                            <td class="group-radio">
+                                <label class="status-lbl">
+                                    Ativo
+                                    <input type="radio" name="status" id="on" value="1" />
+                                </label>
+
+                                <label class="status-lbl">
+                                    Inativo
+                                    <input type="radio" name="status" id="on" value="1" />
+                                </label>
+                            </td>
+                            <td>
+                                <a href={`/backoffice/user/register/${index.id}`} class="botao-editar"><span>Editar</span></a>
+                            </td>
+                        </tr>
+                    );
+                })}
             </table>
         </body>
     );
