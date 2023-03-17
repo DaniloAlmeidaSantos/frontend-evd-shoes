@@ -5,8 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 function UserListScreen() {
     const location = useLocation();
-    console.log(location.state);
-
+    const [increment, setIncrement] = useState(0);
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -19,7 +18,9 @@ function UserListScreen() {
         setData(getResults);
     }
 
-    console.log(data)
+    const handleSubmit = async () => {
+        console.log("onClick funcionou")
+    }
 
     return (
         <body>
@@ -28,7 +29,7 @@ function UserListScreen() {
                     <h1>Lista de usuários</h1>
                 </div>
                 <div class="subtop-header">
-                    <button class="btn">Cadastrar usuário</button>
+                    <a href="/backoffice/user/register" class="btn">Cadastrar usuário</a>
                 </div>
             </section>
             <table >
@@ -39,25 +40,25 @@ function UserListScreen() {
                     <th>Status</th>
                     <th>Ações</th>
                 </tr>
-                {data.map((index) => {
+                {data.map((data, index) => {
                     return (
                         <tr>
-                            <td>{index.username}</td>
-                            <td>{index.email}</td>
-                            <td>{index.tipousu}</td>
+                            <td>{data.username}</td>
+                            <td>{data.email}</td>
+                            <td>{data.userType.groupName}</td>
                             <td class="group-radio">
                                 <label class="status-lbl">
                                     Ativo
-                                    <input type="radio" name="status" id="on" value="1" />
+                                    <input type="radio" name={`status-${index}`} id="on" value="A" checked={data.status === "A"} onClick={handleSubmit}/>
                                 </label>
 
                                 <label class="status-lbl">
                                     Inativo
-                                    <input type="radio" name="status" id="on" value="1" />
+                                    <input type="radio" name={`status-${index}`} id="off" value="I" checked={data.status === "I"} />
                                 </label>
                             </td>
                             <td>
-                                <a href={`/backoffice/user/register/${index.id}`} class="botao-editar"><span>Editar</span></a>
+                                <a href={`/backoffice/user/register/${data.idUser}`} class="botao-editar"><span>Editar</span></a>
                             </td>
                         </tr>
                     );

@@ -15,7 +15,7 @@ function BackofficeUser() {
 
     const getUserForm = async () => {
         let response = await fetch(
-            'http://localhost:8080/backoffice/user?id=' + id,
+            'https://backend-evd-api.herokuapp.com/backoffice/user?id=' + id,
             {
                 method: 'GET',
                 headers: {
@@ -65,7 +65,7 @@ function BackofficeUser() {
 
             if (id != null) {
                 response = await fetch(
-                    'http://localhost:8080/backoffice/user/update',
+                    'https://backend-evd-api.herokuapp.com/backoffice/user/update',
                     {
                         method: 'PUT',
                         body: JSON.stringify(request),
@@ -76,7 +76,7 @@ function BackofficeUser() {
                 )
             } else {
                 response = await fetch(
-                    'http://localhost:8080/backoffice/user/register',
+                    'https://backend-evd-api.herokuapp.com/backoffice/user/register',
                     {
                         method: 'POST',
                         body: JSON.stringify(request),
@@ -130,7 +130,7 @@ function BackofficeUser() {
                 }
 
                 <label for="cpf">CPF:
-                    <input type="text" id="cpf" name="cpf" onChange={handleInputChange} value={formValues.cpf || ''} required maxLength={12} />
+                    <input type="text" id="cpf" name="cpf" onChange={handleInputChange} value={formValues.cpf || ''} required maxLength={11} />
                 </label>
                 <label for="password">Senha:
                     <input type="password" id="password" name="password" onChange={handleInputChange} value={formValues.password || ''} required maxLength={16} />

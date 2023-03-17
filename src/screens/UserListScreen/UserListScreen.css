@@ -1,4 +1,3 @@
-
 .top-header {
   margin-left: auto;
   margin-right: auto;
@@ -63,7 +62,9 @@ table>tr>th {
 }
 
 .status-lbl {
-  margin-left: 12%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
 }
 
 table>tr>td {
@@ -73,6 +74,7 @@ table>tr>td {
 }
 
 .group-radio {
+  justify-content: center;
   display: flex;
 }
 
@@ -104,4 +106,56 @@ table>tr>td {
 .botao-editar:hover span {
   color: #000;
   transition: 0.5s;
+}
+
+input[type='radio']:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #d1d3d1;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+#on:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: rgb(36, 245, 36);
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid white;
+}
+
+
+#on:hover:after {
+  background-color: rgba(36, 245, 36, 0.397);
+}
+
+#off:hover:after {
+  background-color: rgba(255, 0, 0, 0.397);
+}
+
+#off:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: rgb(255, 0, 0);
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid white;
 }
