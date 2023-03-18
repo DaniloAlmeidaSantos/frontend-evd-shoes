@@ -1,64 +1,45 @@
 .top-header {
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+}
+
+.container-user-list {
+  margin: 1em auto;
+  width: 80%;
+  color: #000;
+  justify-content: center;
+  text-align: center;
+}
+
+.container-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .subtop-header {
   justify-content: space-between;
-  margin: auto;
 }
 
 body {
-  margin-left: auto;
-  margin-right: auto;
-  color: #000000;
   align-items: center;
   justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.bloco {
-  width: 100%;
-  height: 110px;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-}
-
-main>div>h1 {
-  margin: 50px 65px;
-}
-
-main>div>button {
-  width: 180px;
-  height: 30px;
-  background-image: linear-gradient(to bottom, #000000, #0d0d0d);
-  border: 1px solid #353535;
-  border-radius: 5px;
-  color: #fff;
-  margin: 70px;
-}
-
-main>div>button:hover {
-  padding: 1px;
-  border: 1px solid #666;
-  background-image: linear-gradient(to bottom, #171717, #0d0d0d);
-  transition: 0.3s;
-  cursor: pointer;
-}
 
 table {
   margin: auto;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
 }
 
 table>tr>th {
-  background-image: linear-gradient(to bottom, #999, rgb(187, 187, 187));
+  background-image: linear-gradient(to bottom, #cccccc, rgb(241, 241, 241));
   text-align: center;
-  border: 1px solid #999;
+  border-radius: 3px;
 }
 
 .status-lbl {
@@ -78,18 +59,22 @@ table>tr>td {
   display: flex;
 }
 
-.btn {
-  border: 0px;
-  border-radius: 4px;
-  transition: 0.5s;
+.btn-register {
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #4caf50;
+  font-size: 16px;
+
 }
 
-.btn:hover {
-  color: #000;
-  border-color: #000;
+.btn-register:hover {
+  background-color: #359139;
+  border-color: 1px #000;
 }
 
-.botao-editar {
+.btn-edit-user-list {
   display: inline-block;
   border-radius: 4px;
   background-color: red;
@@ -97,13 +82,13 @@ table>tr>td {
   color: #FFFFFF;
   text-align: center;
   font-size: 12px;
-  padding: 2px;
-  width: 70%;
+  width: 100%;
+  padding: 5px;
   cursor: pointer;
   margin: auto;
 }
 
-.botao-editar:hover span {
+.btn-edit-user-list:hover span {
   color: #000;
   transition: 0.5s;
 }

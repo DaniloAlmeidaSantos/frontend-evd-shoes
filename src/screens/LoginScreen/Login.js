@@ -2,12 +2,15 @@ import './Login.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../media/images/logo.svg";
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function Login() {
   const [formValues, setFormValues] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
@@ -25,10 +28,12 @@ function Login() {
 
     if (response.status === 200) {
       response.json().then(resp => {
+        setLoading(false);
         navigate('/home-backoffice', { state: resp });
       })
     } else {
       alert('Erro ao autenticar: Credenciais incorretas, ou usuário inativo. Valide com o administrador do sistema');
+      setLoading(false);
     }
   };
 
@@ -48,6 +53,13 @@ function Login() {
         <div>
           <input class="input" name="password" type="password" placeholder="Senha" onChange={handleInputChange} value={formValues.password || ''} required maxLength={16} />
         </div>
+        {!loading ?
+          <> </> : (
+            <div className='container-spinner'>
+              <ClipLoader color={'#000'} size={150} />
+            </div>
+          )
+        }
         <input style={{ "margin-bottom": "5%" }} type="submit" value="Acessar" />
         <input type="submit" value="Cadastrar" />
       </form>
