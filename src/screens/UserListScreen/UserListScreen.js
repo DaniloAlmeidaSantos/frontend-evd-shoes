@@ -22,6 +22,7 @@ function UserListScreen() {
     }
 
     const handleSubmit = async (e, idUser) => {
+        setLoading(true);
         e.preventDefault();
         const json = {
             userId: idUser,
@@ -40,7 +41,6 @@ function UserListScreen() {
         )
 
         if (response.status === 200) {
-            setLoading(true);
             getData();
             alert(`Status do usuário ${idUser} atualizado com sucesso!`);
         } else {
