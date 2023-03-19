@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom"
-import BackofficeHomeScreen from "./screens/BackofficeHomeScreen/BackofficeHomeScreen";
+import BackofficeHomeScreen from "./screens/Backoffice/BackofficeHome/BackofficeHomeScreen";
 import LoginScreen from "./screens/LoginScreen/Login";
-import UserListScreen from "./screens/UserListScreen/UserListScreen";
-import BackofficeUser from "./screens/BackofficeUser/BackofficeUser";
+import UserListScreen from "./screens/Backoffice/BackofficeUserList/UserListScreen";
+import BackofficeUser from "./screens/Backoffice/BackofficeUser/BackofficeUser";
 
 function App() {
     return (

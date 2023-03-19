@@ -29,7 +29,8 @@ function Login() {
     if (response.status === 200) {
       response.json().then(resp => {
         setLoading(false);
-        navigate('/home-backoffice', { state: resp });
+        localStorage.setItem('userInfo', JSON.stringify(resp))
+        navigate('/home-backoffice');
       })
     } else {
       alert('Erro ao autenticar: Credenciais incorretas, ou usuário inativo. Valide com o administrador do sistema');

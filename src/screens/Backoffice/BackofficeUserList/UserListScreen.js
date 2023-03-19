@@ -1,11 +1,9 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
 import './UserListScreen.css';
-import { useLocation } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 function UserListScreen() {
-    const location = useLocation();
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
 

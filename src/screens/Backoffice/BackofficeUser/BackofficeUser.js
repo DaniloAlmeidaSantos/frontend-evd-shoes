@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./BackofficeUser.css";
 import { useParams, useNavigate } from 'react-router-dom';
-
+import ClipLoader from 'react-spinners/ClipLoader';
 
 var isFirstReq = false;
 
 function BackofficeUser() {
     const [formValues, setFormValues] = useState({});
-
+    const [loading, setLoading] = useState(false);
     const [userType, setUserType] = useState({});
     const [oldPassword, setOldPassword] = useState('');
     const navigate = useNavigate();
@@ -37,15 +37,18 @@ function BackofficeUser() {
             alert('Erro ao autenticar: Credenciais incorretas, ou usuário inativo. Valide com o administrador do sistema');
         }
 
+        setLoading(false);
     }
 
     if (!isFirstReq && id != null) {
+        setLoading(true);
         isFirstReq = true;
         getUserForm();
 
     }
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         let response = null;
         if (formValues.password === formValues.repeatPassword) {
             e.preventDefault();
@@ -87,8 +90,9 @@ function BackofficeUser() {
                 )
             }
 
-            if (response.status === 200 || response.status === 201)  {
+            if (response.status === 200 || response.status === 201) {
                 response.json().then(resp => {
+                    setLoading(false);
                     navigate('/backoffice/users/list')
                 })
                 alert("Sucesso na inclusão do usuário!");
@@ -110,46 +114,54 @@ function BackofficeUser() {
         setUserType({
             [name]: Number.parseInt(value)
         });
-        console.log(userType)
         formValues["userType"] = { [name]: Number.parseInt(value) };
     }
 
     return (
         <main>
-            <form onSubmit={handleSubmit}>
-                <h1>Cadastro</h1>
-                <label for="username">Nome:
-                    <input type="text" id="username" name="username" onChange={handleInputChange} value={formValues.username || ''} required maxLength={100} />
-                </label>
-                {id == null ?
-                    <>
-                        <label for="email">Email:
-                            <input type="email" id="email" name="email" required maxLength={120} />
+            {loading ?
+                (
+                    <div className='container-spinner'>
+                        <ClipLoader color={'#000'} size={150} />
+                    </div>
+                ) :
+                <>
+                    <form onSubmit={handleSubmit}>
+                        <h1>Cadastro</h1>
+                        <label for="username">Nome:
+                            <input type="text" id="username" name="username" onChange={handleInputChange} value={formValues.username || ''} required maxLength={100} />
                         </label>
-                    </> : <></>
-                }
+                        {id == null ?
+                            <>
+                                <label for="email">Email:
+                                    <input type="email" id="email" name="email" required maxLength={120} />
+                                </label>
+                            </> : <></>
+                        }
 
-                <label for="cpf">CPF:
-                    <input type="text" id="cpf" name="cpf" onChange={handleInputChange} value={formValues.cpf || ''} required maxLength={11} />
-                </label>
-                <label for="password">Senha:
-                    <input type="password" id="password" name="password" onChange={handleInputChange} value={formValues.password || ''} required maxLength={16} />
-                </label>
-                <label for="repeatPassword">Confirmar senha:
-                    <input type="password" id="repeatPassword" name="repeatPassword" onChange={handleInputChange} value={formValues.repeatPassword || ''} required maxLength={16} />
-                </label>
-                <label>
-                    Categoria:
-                    <select name="typeId" value={userType.typeId || 0} onChange={handleSelectChange}>
-                        <option value={1}>Administrador</option>
-                        <option value={2}>Estoquista</option>
-                    </select>
-                </label>
+                        <label for="cpf">CPF:
+                            <input type="text" id="cpf" name="cpf" onChange={handleInputChange} value={formValues.cpf || ''} required maxLength={11} />
+                        </label>
+                        <label for="password">Senha:
+                            <input type="password" id="password" name="password" onChange={handleInputChange} value={formValues.password || ''} required maxLength={16} />
+                        </label>
+                        <label for="repeatPassword">Confirmar senha:
+                            <input type="password" id="repeatPassword" name="repeatPassword" onChange={handleInputChange} value={formValues.repeatPassword || ''} required maxLength={16} />
+                        </label>
+                        <label>
+                            Categoria:
+                            <select name="typeId" value={userType.typeId || 0} onChange={handleSelectChange}>
+                                <option value={1}>Administrador</option>
+                                <option value={2}>Estoquista</option>
+                            </select>
+                        </label>
 
-                <div class="btnRegister">
-                    <input type="submit" value="Cadastrar" />
-                </div>
-            </form>
+                        <div class="btnRegister">
+                            <input type="submit" value="Cadastrar" />
+                        </div>
+                    </form>
+                </>
+            }
         </main>
     );
 }

@@ -2,23 +2,21 @@ import './BackofficeHomeScreen.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUsers, faBoxesStacked } from '@fortawesome/free-solid-svg-icons'
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 function BackofficeHomeScreen() {
-  const location = useLocation();
   const navigate = useNavigate();
-
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   const nextPage = (e) => {
-    console.log(location.state);
-    navigate(e, { state: location.state })
+    navigate(e)
   }
 
   return (
     <main class="container">
       {
-        location.state != null ?
+        userInfo != null ?
           <>
             <header class="initial">
               <h1>BACKOFFICE</h1>
@@ -26,7 +24,7 @@ function BackofficeHomeScreen() {
             </header>
 
             <section class="boxes">
-              {location.state.userType === "ADMIN" ?
+              {userInfo.userType === "ADMIN" ?
                 <>
                   <section class="options">
                     <a href='/backoffice/users/list' onClick={nextPage("/backoffice/users/list")}>
