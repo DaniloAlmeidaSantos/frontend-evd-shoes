@@ -1,0 +1,15 @@
+.group-pagination > button {
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 5px;
+    width: 30px;
+    text-align: center;
+    padding: 5px;
+    background-color: red;
+    color: white;
+}
+
+.group-pagination > button:hover {
+    background-color: gray;
+    cursor: pointer;
+}

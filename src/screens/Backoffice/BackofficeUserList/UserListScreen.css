@@ -48,10 +48,14 @@ table>tr>th {
   flex-direction: column;
 }
 
+table>tr {
+  height: auto;
+  width: 50px;
+  
+}
+
 table>tr>td {
   text-align: center;
-  padding: 10px;
-  border-bottom: 1px solid #999;
 }
 
 .group-radio {
@@ -66,6 +70,9 @@ table>tr>td {
   cursor: pointer;
   background-color: #4caf50;
   font-size: 16px;
+  
+  justify-content: center;
+  text-align: center;
 
 }
 
@@ -75,7 +82,6 @@ table>tr>td {
 }
 
 .btn-edit-user-list {
-  display: inline-block;
   border-radius: 4px;
   background-color: red;
   border: none;
@@ -83,14 +89,18 @@ table>tr>td {
   text-align: center;
   font-size: 12px;
   width: 100%;
-  padding: 5px;
+  padding: 10px;
   cursor: pointer;
-  margin: auto;
+  margin: 10px;
 }
 
 .btn-edit-user-list:hover span {
   color: #000;
   transition: 0.5s;
+}
+
+input[type='radio'] {
+  margin-top: 10px;
 }
 
 input[type='radio']:after {

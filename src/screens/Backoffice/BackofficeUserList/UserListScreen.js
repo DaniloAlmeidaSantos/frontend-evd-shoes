@@ -20,30 +20,37 @@ function UserListScreen() {
     }
 
     const handleSubmit = async (e, idUser) => {
-        setLoading(true);
         e.preventDefault();
-        const json = {
-            userId: idUser,
-            status: e.target.value
-        }
 
-        let response = await fetch(
-            'https://backend-evd-api.herokuapp.com/backoffice/user/update/status',
-            {
-                method: 'PUT',
-                body: JSON.stringify(json),
-                headers: {
-                    'Content-type': 'application/json'
-                }
+        // eslint-disable-next-line no-restricted-globals
+        const responseConfirm = confirm("Você deseja mesmo prosseguir com ativação / inativação deste usuário?");
+
+        if (responseConfirm) {
+            setLoading(true);
+            const json = {
+                userId: idUser,
+                status: e.target.value
             }
-        )
-
-        if (response.status === 200) {
-            getData();
-            alert(`Status do usuário ${idUser} atualizado com sucesso!`);
-        } else {
-            alert('Erro ao atualizar status do usuário: ' + idUser);
+    
+            let response = await fetch(
+                'https://backend-evd-api.herokuapp.com/backoffice/user/update/status',
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(json),
+                    headers: {
+                        'Content-type': 'application/json'
+                    }
+                }
+            )
+    
+            if (response.status === 200) {
+                getData();
+                alert(`Status do usuário ${idUser} atualizado com sucesso!`);
+            } else {
+                alert('Erro ao atualizar status do usuário: ' + idUser);
+            }
         }
+        
     }
 
     return (

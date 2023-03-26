@@ -3,6 +3,7 @@ import BackofficeHomeScreen from "./screens/Backoffice/BackofficeHome/Backoffice
 import LoginScreen from "./screens/LoginScreen/Login";
 import UserListScreen from "./screens/Backoffice/BackofficeUserList/UserListScreen";
 import BackofficeUser from "./screens/Backoffice/BackofficeUser/BackofficeUser";
+import BackofficeProductsListScreen from "./screens/Backoffice/BackofficeProducts/BackofficeProductsListScreen";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Route path="/home-backoffice" element={<BackofficeHomeScreen />} />
                 <Route path="/backoffice/users/list" element={<UserListScreen />} />
                 <Route path="/backoffice/user/register/:id?" element={<BackofficeUser/>} />
+                <Route path="/backoffice/products/list" element={<BackofficeProductsListScreen />} />
             </Routes>
         </div>
     );

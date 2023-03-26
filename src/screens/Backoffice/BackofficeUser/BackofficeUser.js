@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./BackofficeUser.css";
 import { useParams, useNavigate } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
+import validateCPFUtils from "../../../utils/ValidateCpfUtils";
 
 var isFirstReq = false;
 
@@ -50,10 +51,19 @@ function BackofficeUser() {
     const handleSubmit = async (e) => {
         setLoading(true);
         let response = null;
+
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        let isInvalidCpf = validateCPFUtils(data.cpf);
+
+        if (!isInvalidCpf) {
+            setLoading(false);
+            alert("CPF inválido, favor revise os dados informados");
+            return;
+        }
+
         if (formValues.password === formValues.repeatPassword) {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData);
             const request = {
                 'idUser': id,
                 'username': data.username,
@@ -92,7 +102,6 @@ function BackofficeUser() {
 
             if (response.status === 200 || response.status === 201) {
                 response.json().then(resp => {
-                    setLoading(false);
                     navigate('/backoffice/users/list')
                 })
                 alert("Sucesso na inclusão do usuário!");
@@ -102,6 +111,8 @@ function BackofficeUser() {
         } else {
             alert('As senhas não se coincidem, favor repita novamente a senha!');
         }
+
+        setLoading(false);
     };
 
     const handleInputChange = (e) => {
