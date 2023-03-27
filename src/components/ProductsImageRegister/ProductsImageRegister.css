@@ -1,0 +1,15 @@
+.products-register-image {
+    overflow-x: inherit;
+    width: 100px;
+    height: 100px;
+    margin: 1%;
+    border-radius: 60%;
+}
+
+
+.image-block {
+    display: flex;
+    flex-direction: column;
+    left: -10%;
+    top: -20%;
+}

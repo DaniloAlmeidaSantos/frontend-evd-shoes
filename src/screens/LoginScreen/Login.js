@@ -7,8 +7,8 @@ import ClipLoader from 'react-spinners/ClipLoader';
 function Login() {
   const [formValues, setFormValues] = useState({});
   const [loading, setLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -44,7 +44,7 @@ function Login() {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
-  
+
   return (
     <main class="container-login">
       <img src={logo} alt='Logo da empresa EVD Shoes, nela representa um tênis preto com detalhes em branco com o nome da empresa abaixo do tênis.' />

@@ -4,8 +4,6 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import PaginationComponent from '../../../components/Pagination/PaginationComponent';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ProductsModal from '../../../components/Modal/Products/ProductsModal';
-import Modal from "react-overlays/Modal";
 
 function BackofficeProductsListScreen() {
     const [loading, setLoading] = useState(false);
@@ -94,7 +92,7 @@ function BackofficeProductsListScreen() {
                             <h1>Lista de produtos</h1>
                         </div>
                         <div class="subtop-header">
-                            <a href="/backoffice/user/register">
+                            <a href="/backoffice/products/regiter">
                                 <FontAwesomeIcon size="2x" icon={faPlus} className="plus-register" />
                             </a>
                         </div>
@@ -147,7 +145,7 @@ function BackofficeProductsListScreen() {
                                     </td>
                                     <td>
                                         <a
-                                            href={`/backoffice/user/register/${data.idProduct}`}
+                                            href={`/backoffice/products/regiter/${data.idProduct}`}
                                             className="btn-edit-user-list"
                                             style={{ marginTop: '10px' }}>
                                             <span>Editar</span>
