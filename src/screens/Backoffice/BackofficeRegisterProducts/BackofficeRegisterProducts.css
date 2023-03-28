@@ -43,3 +43,14 @@ input[type="file"] {
     color: red;
     
 }
+
+.btn-cancel {
+    text-align: center;
+    display: block;
+    margin-top: 1%;
+    color: white;
+    background-color: black;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+}

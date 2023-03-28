@@ -5,14 +5,22 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ProductsImageRegister({ object }) {
+    
+    
+    const handleRemoveItem = (index) => {
+        if (index != null) {
+            object.splice(index);
+        }
+    }
+
     return (
         <section className="block-products-image">
             {object.map((data, index) => {
                 return (
                     <>
-                        <button className="remove-item" >
-                            <FontAwesomeIcon size="2x" icon={faXmark}/>
-                        </button>
+                        <span className="remove-item" onClick={() => handleRemoveItem(index)} >
+                            <FontAwesomeIcon size="2x" icon={faXmark} />
+                        </span>
                         <img src={data.file} className="products-register-image" />
                     </>
 

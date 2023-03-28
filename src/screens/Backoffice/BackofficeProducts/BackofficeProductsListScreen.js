@@ -151,7 +151,7 @@ function BackofficeProductsListScreen() {
                                             <span>Editar</span>
                                         </a>
                                         <a
-                                            href={`/products/${data.idProduct}`}
+                                            href={`/sell/product/${data.idProduct}`}
                                             className="btn-edit-user-list"
                                             style={{ marginTop: '10px' }}>
                                             <span>Visualizar</span>

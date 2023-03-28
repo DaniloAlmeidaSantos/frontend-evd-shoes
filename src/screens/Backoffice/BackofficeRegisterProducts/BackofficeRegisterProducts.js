@@ -36,7 +36,6 @@ function BackofficeProductsRegister() {
         })
       }
     }
-    
 
     setLoading(false);
   }
@@ -94,7 +93,7 @@ function BackofficeProductsRegister() {
 
     if (id != null) {
       response = await fetch(
-        'http://localhost:8080/backoffice/user/update',
+        'http://localhost:8080/backoffice/product/update',
         {
           method: 'PUT',
           body: JSON.stringify(request),
@@ -235,6 +234,7 @@ function BackofficeProductsRegister() {
             <ProductsImageRegister object={images} />
             <br />
             <input type="submit" value="Salvar" />
+            <a href={"/backoffice/products/list"} className="btn-cancel">Cancelar</a>
           </form>
           <br />
         </>

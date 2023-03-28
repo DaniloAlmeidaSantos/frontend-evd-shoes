@@ -1,0 +1,34 @@
+.products-sell-image {
+    width: 150px;
+    border-radius: 10px;
+}
+
+.products-images {
+    height: 500px;
+    overflow-y: scroll;
+    margin-right: 10px;
+}
+
+.block-sell-product-image {
+    margin: 10px;
+    background-color: white;
+    width: 150px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.block-sell-product-image:hover {
+    opacity:0.6;
+}
+
+.block-principal-image {
+    background-color: white;
+    margin-top: 20px;
+    margin-right: 10px;
+    border-radius: 40px;
+}
+
+.main-product-sell {
+    display: flex;
+    flex-direction: row;
+}

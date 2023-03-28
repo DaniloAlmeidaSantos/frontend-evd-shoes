@@ -5,6 +5,7 @@ import UserListScreen from "./screens/Backoffice/BackofficeUserList/UserListScre
 import BackofficeUser from "./screens/Backoffice/BackofficeUser/BackofficeUser";
 import BackofficeProductsListScreen from "./screens/Backoffice/BackofficeProducts/BackofficeProductsListScreen";
 import BackofficeProductsRegister from "./screens/Backoffice/BackofficeRegisterProducts/BackofficeRegisterProducts";
+import SellProductsScreen from "./screens/Public/SellProductsScreen/SellProductScreen";
 
 function App() {
     return (
@@ -16,7 +17,7 @@ function App() {
                 <Route path="/backoffice/user/register/:id?" element={<BackofficeUser/>} />
                 <Route path="/backoffice/products/list" element={<BackofficeProductsListScreen />} />
                 <Route path="/backoffice/products/regiter/:id?" element={<BackofficeProductsRegister />} />
-                <Route path="/product/:id" element={<BackofficeProductsListScreen />} />
+                <Route path="/sell/product/:id" element={<SellProductsScreen />} />
             </Routes>
         </div>
     );
