@@ -225,9 +225,9 @@ function BackofficeProductsRegister() {
               Selecione suas imagens:
               <input
                 type="file"
-                name="image"
+                name="file-image"
                 id="image"
-                required
+                data-ajax='false'
                 disabled={userInfo.userType !== "ADMIN"}
                 onChange={handleFileChange}
               />
