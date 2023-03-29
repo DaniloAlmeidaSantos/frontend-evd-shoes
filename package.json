@@ -2,7 +2,7 @@
   "name": "frontend-evd-shoes",
   "version": "1.0.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "https://backend-evd-api.herokuapp.com",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",

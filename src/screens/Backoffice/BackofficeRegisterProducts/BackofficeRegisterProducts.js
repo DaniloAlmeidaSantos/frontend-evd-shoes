@@ -19,7 +19,7 @@ function BackofficeProductsRegister() {
   const getProductsForm = async () => {
     if (id != null) {
       let response = await fetch(
-        'http://localhost:8080/backoffice/product?id=' + id,
+        'https://backend-evd-api.herokuapp.com/backoffice/product?id=' + id,
         {
           method: 'GET',
           headers: {
@@ -93,7 +93,7 @@ function BackofficeProductsRegister() {
 
     if (id != null) {
       response = await fetch(
-        'http://localhost:8080/backoffice/product/update',
+        'https://backend-evd-api.herokuapp.com/backoffice/product/update',
         {
           method: 'PUT',
           body: JSON.stringify(request),
@@ -104,7 +104,7 @@ function BackofficeProductsRegister() {
       )
     } else {
       response = await fetch(
-        'http://localhost:8080/backoffice/product/add',
+        'https://backend-evd-api.herokuapp.com/backoffice/product/add',
         {
           method: 'POST',
           body: JSON.stringify(request),
@@ -134,7 +134,6 @@ function BackofficeProductsRegister() {
     } else {
       setFormValues({ ...formValues, [name]: value });
     }
-    console.log(value)
   };
 
   return (

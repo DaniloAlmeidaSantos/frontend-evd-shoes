@@ -23,7 +23,7 @@ function BackofficeProductsListScreen() {
     }, [])
 
     async function getData() {
-        const result = await fetch('http://localhost:8080/backoffice/products');
+        const result = await fetch('https://backend-evd-api.herokuapp.com/backoffice/products');
         const getResults = await result.json();
         setLoading(false);
         setData(getResults);
@@ -39,7 +39,7 @@ function BackofficeProductsListScreen() {
         }
 
         setCurrentPage(0);
-        const result = await fetch(`http://localhost:8080/backoffice/products?nameProduct=` + value);
+        const result = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/products?nameProduct=` + value);
         const getResults = await result.json();
         setData(getResults);
     }
@@ -58,7 +58,7 @@ function BackofficeProductsListScreen() {
             }
 
             let response = await fetch(
-                'http://localhost:8080/backoffice/products/status',
+                'https://backend-evd-api.herokuapp.com/backoffice/products/status',
                 {
                     method: 'PUT',
                     body: JSON.stringify(json),

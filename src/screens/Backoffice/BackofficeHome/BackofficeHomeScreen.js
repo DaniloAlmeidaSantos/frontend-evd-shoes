@@ -38,10 +38,12 @@ function BackofficeHomeScreen() {
               }
 
               <section class="options">
-                <div class="logos">
-                  <FontAwesomeIcon size="9x" icon={faBoxesStacked} inverse />
-                  <h3>Gerenciar produtos</h3>
-                </div>
+                <a href='/backoffice/products/list' onClick={nextPage("/backoffice/products/list")}>
+                  <div class="logos">
+                    <FontAwesomeIcon size="9x" icon={faBoxesStacked} inverse />
+                    <h3>Gerenciar produtos</h3>
+                  </div>
+                </a>
               </section>
             </section>
           </> : <>
