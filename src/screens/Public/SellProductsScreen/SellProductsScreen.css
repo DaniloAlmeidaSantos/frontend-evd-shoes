@@ -4,8 +4,10 @@
 }
 
 .products-images {
+    justify-content: center;
     height: 700px;
     overflow-y: scroll;
+    overflow-x: hidden;
     margin-right: 10px;
 }
 
@@ -26,7 +28,10 @@
     margin-top: 20px;
     margin-right: 10px;
     border-radius: 40px;
-    width: 800px;
+    width: 60%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
 .main-product-sell {
@@ -36,6 +41,110 @@
 }
 
 .principal-image {
-    width: 800px;
-    height: 700px;
+    width: 65%;
+    height: 100%;
 }
+
+.product-info {
+    justify-content: center;
+    align-self: flex-start;
+    margin: 2%;
+    width: 30%;
+}
+
+.product-info > p {
+    text-align: left;
+}
+
+.product-title {
+    align-self: center;
+    display: inline-block;
+    font-size: 66px;
+    color: black;
+}
+
+.infos {
+    color: black;
+}
+
+.products-details {
+    margin-left: 5%;
+    margin-top: 2%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10%;
+}
+
+.product-details-title {
+    margin-left: 4%;
+    color: black;
+    font-size: 30px;
+    margin-bottom: 90px;
+    border-bottom: solid 1px black;
+} 
+
+.product-description {
+    margin-top: 2%;
+    
+    color: black;
+    font-size: 24px;
+}
+
+.products-buttons-sell {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-buy {
+    color: white;
+    margin-top: 2%;
+    padding: 15px;
+    width: 60%;
+    font-size: 24px;
+    border-radius: 20px;
+    background-color: rgb(5, 2, 2);
+}
+
+.btn-cart {
+    color: black;
+    font-size: 24px;
+    margin-top: 2%;
+    padding: 15px;
+    width: 40%;
+    margin-left: 3%;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.products-others-infos {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.frete {
+    align-self: self-start;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.frete:hover {
+    border-bottom: solid 1px black;
+}
+
+.plus-cart {
+    margin-right: 1%;
+}
+
+.rating {
+    margin-left: 15%;
+    justify-content: center;
+    text-align: center;
+}
+

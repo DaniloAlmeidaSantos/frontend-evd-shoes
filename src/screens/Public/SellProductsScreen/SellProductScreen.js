@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import "./SellProductsScreen.css";
 import { useParams } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
-
-let firstRequest = true;
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function SellProductsScreen() {
     const [formValues, setFormValues] = useState({});
@@ -23,7 +23,7 @@ function SellProductsScreen() {
 
     const getProductsForm = async () => {
         let response = await fetch(
-            'https://backend-evd-api.herokuapp.com/backoffice/product?id=' + id,
+            'http://localhost:8080/backoffice/product?id=' + id,
             {
                 method: 'GET',
                 headers: {
@@ -45,39 +45,71 @@ function SellProductsScreen() {
     }
 
     return (
-        <main className="main-product-sell">
+        <>
             {!loading ?
                 <>
-                    <section className="products-images">
-                        {images.map((data, index) => {
-                            return (
-                                <>
-                                    <div className="block-sell-product-image">
-                                        <img src={data.file} className="products-sell-image" onClick={() => changeSelectedImage(index)} />
-                                    </div>
-                                </>
-                            )
-                        })}
-                    </section>
+                    <main className="main-product-sell">
+                        <section className="products-images">
+                            {images.map((data, index) => {
+                                return (
+                                    <>
+                                        <div className="block-sell-product-image">
+                                            <img src={data.file} className="products-sell-image" onClick={() => changeSelectedImage(index)} />
+                                        </div>
+                                    </>
+                                )
+                            })}
+                        </section>
 
-                    <div className="block-principal-image">
-                        {images.map((data, index) => {
-                            return (
-                                <>
-                                    {index === imageSelectedIndex ?
-                                        <>
-                                            <img src={data.file} className="principal-image" />
-                                        </> : <></>
-                                    }
-                                </>
-                            )
-                        })}
-                    </div>
+                        <div className="block-principal-image">
+                            {images.map((data, index) => {
+                                return (
+                                    <>
+                                        {index === imageSelectedIndex ?
+                                            <>
+                                                <img src={data.file} className="principal-image" />
+                                            </> : <></>
+                                        }
+                                    </>
+                                )
+                            })}
+                        </div>
 
-                    <section className="product-info">
-                        <h1>{formValues.nameProduct}</h1>
-                        <section>
-                            <p style={{ color: "black" }}><b>R$ </b> {formValues.cost} </p>
+                        <section className="product-info">
+                            <h2 className="product-title">{formValues.brand}</h2>
+                            <p style={{ "fontSize": "22px", "color": "black", "marginBottom": "7%" }}>{formValues.nameProduct} </p>
+                            <section className="infos">
+                                <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {formValues.cost} </p>
+                            </section>
+                            <section className="products-others-infos">
+                                <a href="#" className="frete">Calcular frete</a>
+                            </section>
+                            <section className="products-buttons-sell">
+                                <a href="#" className="btn-buy">Comprar</a>
+                                <a href="#" className="btn-cart">
+                                    <FontAwesomeIcon size="1x" icon={faCartPlus} className="plus-cart" />
+                                    Carrinho
+                                </a>
+                            </section>
+                        </section>
+                    </main>
+                    <text className="product-details-title">Os detalhes</text>
+                    <section className="products-details">
+                        <section className="description">
+                            <p style={{ "color": "black" }}>
+                                <b>Descrição:</b>
+                            </p>
+                            <text className="product-description">
+                                {formValues.description}
+                            </text>
+                        </section>
+                        <section className="rating">
+                            <p style={{ "color": "black" }}>
+                                <b>Avaliação: </b>
+                            </p>
+                            <text className="product-description">
+                                {formValues.ratio}
+                            </text>
                         </section>
                     </section>
                 </> : (
@@ -86,7 +118,7 @@ function SellProductsScreen() {
                     </div>
                 )
             }
-        </main>
+        </>
     );
 
 }

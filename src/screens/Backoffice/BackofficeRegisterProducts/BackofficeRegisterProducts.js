@@ -192,6 +192,7 @@ function BackofficeProductsRegister() {
                 step="0.01"
                 placeholder="Ex: R$ 500,00"
                 required
+                disabled={userInfo.userType !== "ADMIN"}
                 onChange={handleInputChange}
                 value={formValues.cost || ''}
               />
@@ -215,6 +216,7 @@ function BackofficeProductsRegister() {
                 step="0.01"
                 placeholder="Ex: 3.5"
                 required
+                disabled={userInfo.userType !== "ADMIN"}
                 onChange={handleInputChange}
                 value={formValues.ratio || ''}
               />
@@ -226,6 +228,7 @@ function BackofficeProductsRegister() {
                 name="image"
                 id="image"
                 required
+                disabled={userInfo.userType !== "ADMIN"}
                 onChange={handleFileChange}
               />
               <FontAwesomeIcon size="2x" icon={faPlus} className="add-image" />
