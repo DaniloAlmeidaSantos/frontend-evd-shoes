@@ -23,7 +23,7 @@ function SellProductsScreen() {
 
     const getProductsForm = async () => {
         let response = await fetch(
-            'http://localhost:8080/backoffice/product?id=' + id,
+            'https://backend-evd-api.herokuapp.com/backoffice/product?id=' + id,
             {
                 method: 'GET',
                 headers: {
