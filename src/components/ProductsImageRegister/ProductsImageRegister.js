@@ -14,8 +14,14 @@ function ProductsImageRegister({ object }) {
     }
 
     const handleAddImageDefault = (index) => {
-        object[index].fileDefault = "S"
-        console.log(object[index])
+        for(let i = 0; i < object.length; i++) {
+            if(i === index) {
+                object[i].fileDefault = 'S';
+            } else {
+                object[i].fileDefault = 'N';
+            }
+        }
+        console.log(object)
     }
 
     return (
@@ -28,7 +34,7 @@ function ProductsImageRegister({ object }) {
                         </span>
                         <img src={data.file} className="products-register-image" />
                         <span className="image-default" onClick={() => handleAddImageDefault(index)} >
-                            <input type="radio" name="checkedMain" id="off" />
+                            <input type="radio" name="checkedMain" id="off" checked={data.fileDefault==='S'}/>
                         </span>
                     </>
                 )
