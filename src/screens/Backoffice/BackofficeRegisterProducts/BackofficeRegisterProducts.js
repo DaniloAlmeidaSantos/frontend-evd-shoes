@@ -28,7 +28,7 @@ function BackofficeProductsRegister() {
           }
         }
       )
-  
+
       if (response.status === 200) {
         response.json().then(resp => {
           setFormValues(resp);

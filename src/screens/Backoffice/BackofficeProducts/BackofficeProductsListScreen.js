@@ -39,9 +39,12 @@ function BackofficeProductsListScreen() {
         }
 
         setCurrentPage(0);
-        const result = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/products?nameProduct=` + value);
-        const getResults = await result.json();
-        setData(getResults);
+        if (value !== '' || value !== undefined) {
+            const result = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/products?nameProduct=` + value);
+            const getResults = await result.json();
+            setData(getResults);
+        }
+
     }
 
     const handleSubmit = async (e, idProduct) => {
