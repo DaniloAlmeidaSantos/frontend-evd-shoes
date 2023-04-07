@@ -45,7 +45,7 @@ function BackofficeProductsRegister() {
     reader.readAsDataURL(file);
     reader.onload = function () {
       const nImages = [...images];
-      nImages.push({ 'name': name, 'file': reader.result })
+      nImages.push({ 'name': name, 'file': reader.result, 'fileDefault': "N" })
       setImages(nImages);
       return;
     };
