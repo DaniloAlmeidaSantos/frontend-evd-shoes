@@ -13,6 +13,17 @@ function ProductsImageRegister({ object }) {
         }
     }
 
+    const handleAddImageDefault = (index) => {
+        for(let i = 0; i < object.length; i++) {
+            if(i === index) {
+                object[i].fileDefault = 'S';
+            } else {
+                object[i].fileDefault = 'N';
+            }
+        }
+        console.log(object)
+    }
+
     return (
         <section className="block-products-image">
             {object.map((data, index) => {
@@ -22,8 +33,10 @@ function ProductsImageRegister({ object }) {
                             <FontAwesomeIcon size="2x" icon={faXmark} />
                         </span>
                         <img src={data.file} className="products-register-image" />
+                        <span className="image-default" onClick={() => handleAddImageDefault(index)} >
+                            <input type="radio" name="checkedMain" id="off" checked={data.fileDefault==='S'}/>
+                        </span>
                     </>
-
                 )
             })}
         </section>
