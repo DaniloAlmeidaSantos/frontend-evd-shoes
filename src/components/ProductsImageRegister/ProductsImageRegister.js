@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useState } from "react";
 import './ProductsImageRegister.css';
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ProductsImageRegister({ object }) {
-    
-    
+    const [valueDefault, setValueDefault] = useState(0)
+
     const handleRemoveItem = (index) => {
         if (index != null) {
             object.splice(index);
@@ -14,14 +14,14 @@ function ProductsImageRegister({ object }) {
     }
 
     const handleAddImageDefault = (index) => {
-        for(let i = 0; i < object.length; i++) {
-            if(i === index) {
+        for (let i = 0; i < object.length; i++) {
+            if (i === index) {
                 object[i].fileDefault = 'S';
+                setValueDefault(object[i].idImage);
             } else {
                 object[i].fileDefault = 'N';
             }
         }
-        console.log(object)
     }
 
     return (
@@ -34,7 +34,13 @@ function ProductsImageRegister({ object }) {
                         </span>
                         <img src={data.file} className="products-register-image" />
                         <span className="image-default" onClick={() => handleAddImageDefault(index)} >
-                            <input type="radio" name="checkedMain" id="off" checked={data.fileDefault==='S'}/>
+                            <input 
+                                type="radio" 
+                                name="checkedMain" 
+                                id="off" 
+                                checked={data.fileDefault === 'S' || valueDefault === data.idImage} 
+                                // onChangeValue={} 
+                            />
                         </span>
                     </>
                 )
