@@ -16,7 +16,7 @@ function App() {
                 <Route path="/backoffice/users/list" element={<UserListScreen />} />
                 <Route path="/backoffice/user/register/:id?" element={<BackofficeUser/>} />
                 <Route path="/backoffice/products/list" element={<BackofficeProductsListScreen />} />
-                <Route path="/backoffice/products/regiter/:id?" element={<BackofficeProductsRegister />} />
+                <Route path="/backoffice/products/register/:id?" element={<BackofficeProductsRegister />} />
                 <Route path="/sell/product/:id" element={<SellProductsScreen />} />
             </Routes>
         </div>
