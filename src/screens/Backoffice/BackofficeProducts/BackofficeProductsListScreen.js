@@ -95,7 +95,7 @@ function BackofficeProductsListScreen() {
                             <h1>Lista de produtos</h1>
                         </div>
                         <div class="subtop-header">
-                            <a href="/backoffice/products/regiter">
+                            <a href="/backoffice/products/register">
                                 <FontAwesomeIcon size="2x" icon={faPlus} className="plus-register" />
                             </a>
                         </div>
@@ -148,7 +148,7 @@ function BackofficeProductsListScreen() {
                                     </td>
                                     <td>
                                         <a
-                                            href={`/backoffice/products/regiter/${data.idProduct}`}
+                                            href={`/backoffice/products/register/${data.idProduct}`}
                                             className="btn-edit-user-list"
                                             style={{ marginTop: '10px' }}>
                                             <span>Editar</span>
