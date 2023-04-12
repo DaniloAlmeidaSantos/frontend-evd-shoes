@@ -19,8 +19,8 @@ function HeaderComponent() {
             <nav>
                 <img src={logo} class="logo" />
                 <ul class="nav-links">
-                    <li><a href="/home-backoffice">Páginal Inicial</a></li>
-                    <li><a href="/home-backoffice">Produtos</a></li>
+                    <li><a href="/products">Páginal Inicial</a></li>
+                    <li><a href="/products">Produtos</a></li>
                     <li><a href="/home-backoffice">Contato</a></li>
                     {userInfo != null && userInfo.userType !== "Cliente" ?
                         <li><a href="/home-backoffice">Backoffice</a></li>
