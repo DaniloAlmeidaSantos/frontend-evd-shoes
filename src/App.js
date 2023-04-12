@@ -6,6 +6,7 @@ import BackofficeUser from "./screens/Backoffice/BackofficeUser/BackofficeUser";
 import BackofficeProductsListScreen from "./screens/Backoffice/BackofficeProducts/BackofficeProductsListScreen";
 import BackofficeProductsRegister from "./screens/Backoffice/BackofficeRegisterProducts/BackofficeRegisterProducts";
 import SellProductsScreen from "./screens/Public/SellProductsScreen/SellProductScreen";
+import ProductDetailsScreen from "./screens/Public/ProductDetails/ProductDetailsScreen";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/backoffice/products/list" element={<BackofficeProductsListScreen />} />
                 <Route path="/backoffice/products/register/:id?" element={<BackofficeProductsRegister />} />
                 <Route path="/sell/product/:id" element={<SellProductsScreen />} />
+                <Route path="/products" element={<ProductDetailsScreen/>}/>
             </Routes>
         </div>
     );

@@ -1,0 +1,150 @@
+.titulo {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+    .subtitulo {
+    font-size: 20px;
+    color: #000;
+
+    }
+
+.descricao {
+     font-size: 18px;
+     width: 60%;
+     float: left;
+    
+}
+.product-info {
+    
+
+    position:left;
+    left: 0;
+    height: 70px;
+    width: 100px;
+    padding: 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+.product-info ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+   
+}
+.product-info ul li {
+    margin-bottom: 10px;
+}
+.product-info ul li span {
+    font-weight: normal;
+}
+
+.product-images {
+    margin-left: 220px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.product-images img {
+    width: 30%;
+    margin-bottom: 20px;
+}
+.product-images figcaption {
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+    font-weight: bold;
+} 
+.product-images figdetails {
+
+    text-align:center; 
+    font-size: 16px; 
+    color: black; 
+
+}
+.product-value productvalues{
+
+    padding: 5px; 
+    border: none;
+    color: black; 
+
+
+}
+.dropdown select {
+  padding: 5px;
+  border: none;
+  background-color: #fff;
+  color: #000;
+}
+
+.dropdown option {
+  background-color: #fff;
+  color: #000;
+}
+.dropbtn {
+  background-color: red;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.color-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.color-icon.blue {
+  background-color: blue;
+}
+
+.color-icon.red {
+  background-color: red;
+}
+
+.color-icon.purple {
+  background-color: purple;
+}
+
+.color-icon.rainbow {
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+}
+
+.color-icon.yellow {
+  background-color: yellow;
+}
+
+.color-icon.white {
+  background-color: white;
+}
+
+color-icon.black {
+  background-color: black;
+}
+/* mostrar o dropdown de quando o botão é passado o mouse na figura */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
