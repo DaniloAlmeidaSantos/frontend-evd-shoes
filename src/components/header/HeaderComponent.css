@@ -38,6 +38,13 @@ nav {
     position: relative;
 }
 
+.nav-links li span {
+    text-decoration: none;
+    color: black;
+    padding: 5px 0;
+    position: relative;
+}
+
 .logo {
     width: 100px;
 }
@@ -55,6 +62,25 @@ nav {
 
 .nav-links li a:hover::after {
     width: 100%;
+}
+
+.nav-links li span::after {
+    content: '';
+    background-color: red;
+    width: 0;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: width 0.5s;
+}
+
+.nav-links li span:hover::after {
+    width: 100%;
+}
+
+.nav-links li span:hover {
+    cursor: pointer;
 }
 
 .btn { 
