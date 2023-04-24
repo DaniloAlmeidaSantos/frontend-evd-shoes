@@ -97,8 +97,6 @@ function Login() {
     data["addresses"] = addresses;
     data["userType"] = userType;
 
-    console.log(data);
-
     let response = await fetch(
       'http://localhost:8080/backoffice/user/register',
       {
