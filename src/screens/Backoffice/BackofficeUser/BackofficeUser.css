@@ -4,7 +4,7 @@
 
 form {
     background-color: #fff;
-    max-width: 500px;
+    max-width: 700px;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -29,12 +29,13 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="search"],
+input[type="date"],
 input[type="password"] {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 input[type="submit"] {

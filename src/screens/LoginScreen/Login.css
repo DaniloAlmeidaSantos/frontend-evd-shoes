@@ -14,6 +14,105 @@
     justify-content: center;
 }
 
-form {
+
+.form-register-user {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-register {
+    display: inline-block;
+}
+
+.register-1st-column {
+    display: flex;
+    flex-direction: column;
     width: 50%;
+}
+
+.register-2nd-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+#vertical-line {
+    height: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-right: 1px solid black;
+}
+
+.sub-title {
+    color: black;
+}
+
+.uf-city-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.label-age {
+    margin-right: 10px;
+}
+
+.card {
+    width: 100%;
+    text-align: start;
+    color: black;
+    box-shadow: 4px 4px 6px 4px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 4%;
+    border-radius: 5px;
+}
+
+.icon-trash-register-user {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 5px;
+}
+
+.btn-icon-trash :hover{
+    color: red;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 5px 8px 16px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container-card {
+    padding: 2px 16px;
+    width: 60%;
+}
+
+.btn-add-address {
+    color: white;
+    background-color: black;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.select-genre {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.btn-add-address :hover {
+    box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.2);;
+}
+
+form {
+    width: 70%;
 }
