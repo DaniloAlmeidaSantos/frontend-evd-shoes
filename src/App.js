@@ -12,14 +12,14 @@ function App() {
     return (
         <div className="App">
             <Routes>
-                <Route path="/" element={<LoginScreen />} />
+                <Route path="/" element={<ProductDetailsScreen/>}/>
+                <Route path="/login" element={<LoginScreen />} />
                 <Route path="/home-backoffice" element={<BackofficeHomeScreen />} />
                 <Route path="/backoffice/users/list" element={<UserListScreen />} />
                 <Route path="/backoffice/user/register/:id?" element={<BackofficeUser/>} />
                 <Route path="/backoffice/products/list" element={<BackofficeProductsListScreen />} />
                 <Route path="/backoffice/products/register/:id?" element={<BackofficeProductsRegister />} />
                 <Route path="/sell/product/:id" element={<SellProductsScreen />} />
-                <Route path="/products" element={<ProductDetailsScreen/>}/>
             </Routes>
         </div>
     );

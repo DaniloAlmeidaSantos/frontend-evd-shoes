@@ -1,13 +1,14 @@
-import './Login.css';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logo from "../../media/images/logo.svg";
 import ClipLoader from 'react-spinners/ClipLoader';
 import AddressModal from '../../components/Modal/Address/AddressModal';
-import { faC, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import validateCPFUtils from '../../utils/ValidateCpfUtils';
+
+import { useNavigate } from 'react-router-dom';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import validateCPFUtils from "../../../utils/ValidateCpfUtils";
+
+import './Login.css';
 
 function Login() {
   const [formValues, setFormValues] = useState({});
@@ -15,9 +16,8 @@ function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [addresses, setAddresses] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [deliveryAddress, setDeliveryAddress] = useState(0);
-  const [invoiceAddress, setInvoiceAddress] = useState(0);
-  const [genre, setGenre] = useState('');
+  const [indexDeliveryAddress, setIndexDeliveryAddress] = useState(0);
+  const [indexInvoiceAddress, setIndexInvoiceAddress] = useState(0);
   const navigate = useNavigate();
 
 
@@ -42,7 +42,11 @@ function Login() {
       response.json().then(resp => {
         setLoading(false);
         localStorage.setItem('userInfo', JSON.stringify(resp))
-        navigate('/home-backoffice');
+        if (resp.userType === "CLIENTE") {
+          navigate('/');
+        } else {
+          navigate('/home-backoffice');
+        }
       })
     } else {
       alert('Erro ao autenticar: Credenciais incorretas, ou usuário inativo. Valide com o administrador do sistema');
@@ -50,10 +54,76 @@ function Login() {
     }
   };
 
+  const handleSubmitRegister = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    if (!validateCPFUtils(data.cpf)) {
+      setLoading(false);
+      alert("CPF inválido!");
+      return;
+    }
+
+    if (addresses.length === 0) {
+      setLoading(false);
+      alert("É obrigatório adicionar ao menos um endereço!");
+      return;
+    }
+
+    if (data.password !== data.confirmPassword) {
+      setLoading(false);
+      alert("As senhas não se coincidem!");
+      return;
+    }
+
+    addresses.filter((data, index) => {
+      if (index === indexInvoiceAddress) {
+        data["invoiceAddress"] = "S";
+      }
+    });
+
+    addresses.filter((data, index) => {
+      if (index === indexDeliveryAddress) {
+        data["deliveryAddress"] = "S";
+      }
+    });
+
+    const userType = {
+      typeId: "3"
+    }
+
+    data["addresses"] = addresses;
+    data["userType"] = userType;
+
+    console.log(data);
+
+    let response = await fetch(
+      'http://localhost:8080/backoffice/user/register',
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json'
+        }
+      }
+    );
+
+    if (response.status === 201) {
+      setIsLogin(true);
+      setFormValues({});
+    } else {
+      alert('Erro ao realizar cadastro, tente novamente mais tarde.');
+    }
+
+    setLoading(false);
+
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    console.log(value)
   };
 
   const handleSelectChange = (e) => {
@@ -62,11 +132,7 @@ function Login() {
   }
 
   const handleRemoveAddress = (index) => {
-    const data = addresses;
-    data.splice(index, 1);
-    console.log(data);
-    setAddresses(data);
-    console.log(addresses)
+    setAddresses(addresses.splice(--index, 1));
   }
 
   return (
@@ -98,7 +164,7 @@ function Login() {
           </form>
         </> :
         <>
-          <form onSubmit={handleSubmitLogin} style={{ maxWidth: "800px" }}>
+          <form onSubmit={handleSubmitRegister} style={{ maxWidth: "800px" }}>
             <h1> Cadastro </h1>
             <div className="form-register-user">
               <div className='register-1st-column'>
@@ -107,7 +173,7 @@ function Login() {
                 <label class="label-age">
                   Data de nascimento:
                 </label>
-                <input class="input" type="date" placeholder="Data de nascimento" name="dateOfBirth" onChange={handleInputChange} style={{ textAlign: "left" }} value={formValues.dateOfBirth || ''} required/>
+                <input class="input" type="date" placeholder="Data de nascimento" name="dateOfBirth" onChange={handleInputChange} style={{ textAlign: "left" }} value={formValues.dateOfBirth || ''} required />
                 <input class="input" name="email" type="email" placeholder="E-mail" onChange={handleInputChange} value={formValues.email || ''} required maxLength={120} />
                 <input class="input" name="password" type="password" placeholder="Senha" onChange={handleInputChange} value={formValues.password || ''} required maxLength={16} />
                 <input class="input" name="confirmPassword" type="password" placeholder="Confirme a senha" onChange={handleInputChange} value={formValues.confirmPassword || ''} required maxLength={16} />
@@ -138,15 +204,27 @@ function Login() {
                           <label style={{ fontSize: "12px", width: "70px", textAlign: "center" }}>
                             Endereço de entrega?
                             <br />
-                            <input type='radio' />
+                            <input
+                              name="deliveryAddress"
+                              id="on"
+                              type='radio'
+                              checked={indexDeliveryAddress === index}
+                              onChange={() => setIndexDeliveryAddress(index)}
+                            />
                           </label>
                           <label style={{ fontSize: "12px", width: "70px", textAlign: "center", marginLeft: "10px" }}>
                             Endereço de fatura?
                             <br />
-                            <input type='checkbox' />
+                            <input
+                              name="invoiceAddress"
+                              id="on"
+                              type='radio'
+                              checked={indexInvoiceAddress === index}
+                              onChange={() => setIndexInvoiceAddress(index)}
+                            />
                           </label>
                           <span style={{ backgroundColor: "white" }} onClick={() => handleRemoveAddress(index)}>
-                            <label style={{ fontSize: "10px" }}>
+                            <label style={{ fontSize: "12px", textAlign: "center" }}>
                               Excluir?
                               <br />
                               <FontAwesomeIcon className='btn-icon-trash' size="2x" icon={faTrash} />

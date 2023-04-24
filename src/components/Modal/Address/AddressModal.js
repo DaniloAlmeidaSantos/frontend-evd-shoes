@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './AddressModal.css';
 
 function AddressModal(props) {
     let { addresses } = props;
     const [formValues, setFormValues] = useState({});
-
-    console.log(addresses)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -28,7 +26,7 @@ function AddressModal(props) {
 
             let address = {
                 "cep": jsonResponse.cep,
-                "street": jsonResponse.logradouro,
+                "streetName": jsonResponse.logradouro,
                 "district": jsonResponse.bairro,
                 "uf": jsonResponse.uf,
                 "city": jsonResponse.localidade
@@ -42,6 +40,17 @@ function AddressModal(props) {
     }
 
     const save = () => {
+
+        if (!formValues.cep) {
+            alert("CEP é um campo obrigatório, favor preencher!")
+            return;
+        }
+
+        if (!formValues.number) {
+            alert("Número é um campo obrigatório, favor preencher!")
+            return;
+        }
+
         const newAddress = addresses;
         newAddress.push(formValues);
         addresses = newAddress;
@@ -63,14 +72,17 @@ function AddressModal(props) {
             <Modal.Body className='modal-container'>
                 <h2>Inclua os dados do endereço</h2>
                 <div className='search-for-cep'>
-                    <input class="input" name="cep" pattern="\(\d{2}\)\d{4}-\d{4}" type="text" placeholder="CEP" onChange={handleInputChange} value={formValues.cep || ''} maxLength={120} style={{ width: "40%", marginRight: "10px" }} />
+                    <input class="input" name="cep" type="text" placeholder="CEP" onChange={handleInputChange} value={formValues.cep || ''} maxLength={120} style={{ width: "40%", marginRight: "10px" }} />
                     <span className="search-cep" onClick={() => handleSearchPerCEP()} >
                         <FontAwesomeIcon size="1x" icon={faSearch} />
                         Consultar
                     </span>
                 </div>
-                <input class="input" name="street" type="text" placeholder="Rua" value={formValues.street || ''} disabled maxLength={16} />
-                <input class="input" name="district" type="text" placeholder="Bairro" value={formValues.district || ''} disabled maxLength={120} />
+                <div className='uf-city-info'>
+                    <input class="input" name="street" type="text" placeholder="Rua" value={formValues.street || ''} disabled />
+                    <input class="input" name="number" type="text" placeholder="Número" value={formValues.number || ''} onChange={handleInputChange} maxLength={5} style={{ width: "20%", marginLeft: "10px" }} />
+                </div>
+                <input class="input" name="district" type="text" placeholder="Bairro" value={formValues.district || ''} disabled />
                 <div className='uf-city-info'>
                     <input
                         class="input-uf"
@@ -84,11 +96,10 @@ function AddressModal(props) {
                         name="city"
                         type="text" placeholder="Cidade"
                         onChange={handleInputChange} value={formValues.city || ''}
-                        maxLength={120}
                         disabled
                     />
                 </div>
-                <input class="input" name="state" type="text" placeholder="Complemento" value={formValues.complement || ''} maxLength={16} />
+                <input class="input" name="state" type="text" placeholder="Complemento" value={formValues.complement || ''} maxLength={120} />
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={save}>Incluir</Button>

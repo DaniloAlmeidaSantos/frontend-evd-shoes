@@ -11,7 +11,7 @@ function HeaderComponent() {
 
     const handleLogOut = () => {
         localStorage.removeItem('userInfo');
-        navigate('/');
+        navigate('/login');
     }
 
     return (
@@ -19,17 +19,17 @@ function HeaderComponent() {
             <nav>
                 <img src={logo} class="logo" />
                 <ul class="nav-links">
-                    <li><a href="/products">Páginal Inicial</a></li>
-                    <li><a href="/products">Produtos</a></li>
+                    <li><a href="/">Páginal Inicial</a></li>
+                    <li><a href="/">Produtos</a></li>
                     <li><a href="/home-backoffice">Contato</a></li>
-                    {userInfo != null && userInfo.userType !== "Cliente" ?
+                    {userInfo != null && userInfo.userType !== "CLIENTE" ?
                         <li><a href="/home-backoffice">Backoffice</a></li>
                         : <> </>
                     }
 
                     {userInfo == null ?
                         <>
-                            <li><a href="/">Acessar</a></li>
+                            <li><a href="/login">Acessar</a></li>
                             <li class="btn">Cadastrar</li>
                         </>
                         : <>
