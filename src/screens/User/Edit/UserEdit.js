@@ -170,18 +170,10 @@ function UserEdit() {
                 Nome completo:
               </label>
               <input class="input" name="username" type="text" placeholder="Nome completo" onChange={handleInputChange} value={formValues.username || ''} required maxLength={160} />
-              <label style={{ textAlign: "left", width: "100%" }}>
-                CPF:
-              </label>
-              <input type="text" id="cpf" name="cpf" placeholder="CPF" onChange={handleInputChange} value={formValues.cpf || ''} required maxLength={11} />
               <label class="label-age">
                 Data de nascimento:
               </label>
               <input class="input" type="date" placeholder="Data de nascimento" name="dateOfBirth" onChange={handleInputChange} style={{ textAlign: "left" }} value={formValues.dateOfBirth || ''} required />
-              <label style={{ textAlign: "left", width: "100%" }}>
-                Email:
-              </label>
-              <input class="input" name="email" type="email" placeholder="E-mail" onChange={handleInputChange} value={formValues.email || ''} required maxLength={120} />
               <label style={{ textAlign: "left", width: "100%" }}>
                 Senha:
               </label>
@@ -267,7 +259,7 @@ function UserEdit() {
             </div>
           </div>
 
-          <input className="btn-register" style={{ "margin-bottom": "5%" }} type="submit" value="Finalizar cadastro" />
+          <input className="btn-register" style={{ "margin-bottom": "5%" }} type="submit" value="Finalizar alteração" />
         </form>
         : (
           <div className='container-spinner'>
