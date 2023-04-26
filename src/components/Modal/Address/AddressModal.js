@@ -51,7 +51,7 @@ function AddressModal(props) {
             return;
         }
 
-        const newAddress = addresses;
+        const newAddress = addresses;   
         newAddress.push(formValues);
         addresses = newAddress;
         props.onHide();

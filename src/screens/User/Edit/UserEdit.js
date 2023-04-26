@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import AddressModal from '../../../components/Modal/Address/AddressModal';
-import validateCPFUtils from '../../../utils/ValidateCpfUtils';
 import greetingMessage from '../../../utils/HoursUtils'
 
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,7 +16,7 @@ function UserEdit() {
   const [showModal, setShowModal] = useState(false);
   const [indexDeliveryAddress, setIndexDeliveryAddress] = useState(0);
   const [indexInvoiceAddress, setIndexInvoiceAddress] = useState(0);
-  const navigate = useNavigate();
+  const [ oldPassword, setOldPassword ] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -41,6 +40,7 @@ function UserEdit() {
       response.json().then(resp => {
         resp['confirmPassword'] = resp.password;
         setFormValues(resp);
+        setOldPassword(resp.password);
         if (resp.addresses) {
           setAddresses(resp.addresses);
         }
@@ -57,13 +57,7 @@ function UserEdit() {
     setLoading(true);
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-
-    if (!validateCPFUtils(data.cpf)) {
-      setLoading(false);
-      alert("CPF inválido!");
-      return;
-    }
+    let data = Object.fromEntries(formData);
 
     if (addresses.length === 0) {
       setLoading(false);
@@ -77,15 +71,21 @@ function UserEdit() {
       return;
     }
 
+    data["isNewPassword"] = formValues.password !== oldPassword ? true : false;
+
     addresses.filter((data, index) => {
       if (index === indexInvoiceAddress) {
         data["invoiceAddress"] = "S";
+      } else {
+        data["invoiceAddress"] = "N";
       }
     });
 
     addresses.filter((data, index) => {
       if (index === indexDeliveryAddress) {
         data["deliveryAddress"] = "S";
+      } else {
+        data["deliveryAddress"] = "N";
       }
     });
 
@@ -95,11 +95,12 @@ function UserEdit() {
 
     data["addresses"] = addresses;
     data["userType"] = userType;
+    data["idUser"] = formValues.idUser;
 
     let response = await fetch(
-      'https://backend-evd-api.herokuapp.com/user/update',
+      'http://localhost:8080/backoffice/user/update',
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify(data),
         headers: {
           'Content-type': 'application/json'
@@ -107,8 +108,9 @@ function UserEdit() {
       }
     );
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       setFormValues({});
+      getUserForm();
     } else {
       alert('Erro ao realizar cadastro, tente novamente mais tarde.');
     }
@@ -129,10 +131,13 @@ function UserEdit() {
 
   const handleRemoveAddress = async (index) => {
     const addressList = formValues.addresses;
-    if (addressList && addressList[index].idAddress) {
+    // eslint-disable-next-line no-restricted-globals
+    const confirmDelete = confirm("Você deseja mesmo prosseguir com a deleção deste endereço?");
+    if (addressList && addressList[index].idAddress && confirmDelete) {
 
+      setLoading(true)
       const response = await fetch(
-        'https://backend-evd-api.herokuapp.com/user/address/status',
+        'https://backend-evd-api.herokuapp.com/backoffice/user/address/status',
         {
           method: 'PUT',
           body: JSON.stringify(
@@ -149,11 +154,12 @@ function UserEdit() {
 
       if (response.status === 200) {
         alert("Endereço excluído com sucesso!");
+        getUserForm();
         return;
       }
     }
 
-    // setAddresses(addresses.splice(--index, 1));
+    setLoading(false);
   }
 
   return (
@@ -185,7 +191,7 @@ function UserEdit() {
               <label style={{ textAlign: "left", width: "100%" }}>
                 Gênero:
                 <br />
-                <select name="genre" onChange={handleSelectChange} value={formValues.genre || ''} className="select-genre" style={{ width: "100%" }} required>
+                <select name="genre" onChange={handleSelectChange} value={formValues.genre} className="select-genre" style={{ width: "100%" }} required>
                   <option></option>
                   <option value="F">Feminino</option>
                   <option value="M">Masculino</option>
