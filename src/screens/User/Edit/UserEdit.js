@@ -59,6 +59,8 @@ function UserEdit() {
     const formData = new FormData(e.target);
     let data = Object.fromEntries(formData);
 
+    
+
     if (addresses.length === 0) {
       setLoading(false);
       alert("É obrigatório adicionar ao menos um endereço!");
@@ -69,9 +71,9 @@ function UserEdit() {
       setLoading(false);
       alert("As senhas não se coincidem!");
       return;
+    } else {
+      data["newPassword"] = oldPassword !== data.password;
     }
-
-    data["isNewPassword"] = formValues.password !== oldPassword ? true : false;
 
     addresses.filter((data, index) => {
       if (index === indexInvoiceAddress) {
