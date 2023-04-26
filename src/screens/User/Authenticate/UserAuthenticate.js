@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import logo from "../../media/images/logo.svg";
+import logo from "../../../media/images/logo.svg";
 import ClipLoader from 'react-spinners/ClipLoader';
-import AddressModal from '../../components/Modal/Address/AddressModal';
-import validateCPFUtils from '../../utils/ValidateCpfUtils';
+import AddressModal from '../../../components/Modal/Address/AddressModal';
+import validateCPFUtils from '../../../utils/ValidateCpfUtils';
 
 import { useNavigate } from 'react-router-dom';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import './Login.css';
+import './UserAuthenticate.css';
 
-function Login() {
+function UserAuthenticate() {
   const [formValues, setFormValues] = useState({});
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
@@ -97,10 +97,8 @@ function Login() {
     data["addresses"] = addresses;
     data["userType"] = userType;
 
-    console.log(data);
-
     let response = await fetch(
-      'http://localhost:8080/backoffice/user/register',
+      'https://backend-evd-api.herokuapp.com/backoffice/user/register',
       {
         method: 'POST',
         body: JSON.stringify(data),
@@ -197,7 +195,7 @@ function Login() {
                     <>
                       <div class="card">
                         <div class="container-card">
-                          <h4><b>{data.street}</b></h4>
+                          <h4><b>{data.streetName}</b></h4>
                           <p>{data.cep}</p>
                         </div>
                         <div className='icon-trash-register-user'>
@@ -269,4 +267,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default UserAuthenticate;

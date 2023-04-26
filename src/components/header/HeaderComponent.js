@@ -11,7 +11,7 @@ function HeaderComponent() {
 
     const handleLogOut = () => {
         localStorage.removeItem('userInfo');
-        navigate('/login');
+        navigate('/user');
     }
 
     return (
@@ -29,10 +29,11 @@ function HeaderComponent() {
 
                     {userInfo == null ?
                         <>
-                            <li><a href="/login">Acessar</a></li>
+                            <li><a href="/user">Acessar</a></li>
                             <li class="btn">Cadastrar</li>
                         </>
                         : <>
+                            <li><a href={`/user/edit/${userInfo.idUser}`}>Meu perfil</a></li>
                             <li class="btn" onClick={handleLogOut}>Sair</li>
                         </>
                     }

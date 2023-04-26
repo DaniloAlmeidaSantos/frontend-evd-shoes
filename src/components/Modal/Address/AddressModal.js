@@ -51,7 +51,7 @@ function AddressModal(props) {
             return;
         }
 
-        const newAddress = addresses;
+        const newAddress = addresses;   
         newAddress.push(formValues);
         addresses = newAddress;
         props.onHide();
@@ -79,7 +79,7 @@ function AddressModal(props) {
                     </span>
                 </div>
                 <div className='uf-city-info'>
-                    <input class="input" name="street" type="text" placeholder="Rua" value={formValues.street || ''} disabled />
+                    <input class="input" name="street" type="text" placeholder="Rua" value={formValues.streetName || ''} disabled />
                     <input class="input" name="number" type="text" placeholder="Número" value={formValues.number || ''} onChange={handleInputChange} maxLength={5} style={{ width: "20%", marginLeft: "10px" }} />
                 </div>
                 <input class="input" name="district" type="text" placeholder="Bairro" value={formValues.district || ''} disabled />
@@ -99,7 +99,7 @@ function AddressModal(props) {
                         disabled
                     />
                 </div>
-                <input class="input" name="state" type="text" placeholder="Complemento" value={formValues.complement || ''} maxLength={120} />
+                <input class="input" name="complement" type="text" placeholder="Complemento" value={formValues.complement || ''} onChange={handleInputChange} maxLength={120} />
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={save}>Incluir</Button>
