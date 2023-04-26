@@ -42,7 +42,17 @@ function UserEdit() {
         setFormValues(resp);
         setOldPassword(resp.password);
         if (resp.addresses) {
+          resp.addresses.map((data, index) => {
+            if (data.deliveryAddress === "S") {
+              setIndexDeliveryAddress(index);
+            }
+
+            if (data.invoiceAddress === "S") {
+              setIndexInvoiceAddress(index);
+            }
+          });
           setAddresses(resp.addresses);
+
         }
       });
     } else {
