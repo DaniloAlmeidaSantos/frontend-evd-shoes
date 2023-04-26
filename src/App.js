@@ -1,19 +1,21 @@
 import { Routes, Route } from "react-router-dom"
 import BackofficeHomeScreen from "./screens/Backoffice/BackofficeHome/BackofficeHomeScreen";
-import LoginScreen from "./screens/LoginScreen/Login";
 import UserListScreen from "./screens/Backoffice/BackofficeUserList/UserListScreen";
 import BackofficeUser from "./screens/Backoffice/BackofficeUser/BackofficeUser";
 import BackofficeProductsListScreen from "./screens/Backoffice/BackofficeProducts/BackofficeProductsListScreen";
 import BackofficeProductsRegister from "./screens/Backoffice/BackofficeRegisterProducts/BackofficeRegisterProducts";
 import SellProductsScreen from "./screens/Public/SellProductsScreen/SellProductScreen";
 import ProductDetailsScreen from "./screens/Public/ProductDetails/ProductDetailsScreen";
+import UserAuthenticate from "./screens/User/Authenticate/UserAuthenticate";
+import UserEdit from "./screens/User/Edit/UserEdit";
 
 function App() {
     return (
         <div className="App">
             <Routes>
                 <Route path="/" element={<ProductDetailsScreen/>}/>
-                <Route path="/login" element={<LoginScreen />} />
+                <Route path="/user" element={<UserAuthenticate />} />
+                <Route path="/user/edit/:id?" element={<UserEdit />} />
                 <Route path="/home-backoffice" element={<BackofficeHomeScreen />} />
                 <Route path="/backoffice/users/list" element={<UserListScreen />} />
                 <Route path="/backoffice/user/register/:id?" element={<BackofficeUser/>} />
