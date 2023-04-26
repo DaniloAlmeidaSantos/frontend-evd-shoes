@@ -100,7 +100,7 @@ function UserEdit() {
     data["idUser"] = formValues.idUser;
 
     let response = await fetch(
-      'http://localhost:8080/backoffice/user/update',
+      'https://backend-evd-api.herokuapp.com/backoffice/user/update',
       {
         method: 'PUT',
         body: JSON.stringify(data),
