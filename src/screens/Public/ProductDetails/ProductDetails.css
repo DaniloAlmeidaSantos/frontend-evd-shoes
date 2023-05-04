@@ -12,31 +12,11 @@
 .main-details-products {
   margin: 4%;
 }
-/* 
-.product-info {
-  position: left;
-  left: 0;
-  height: 70px;
-  width: 100px;
-  padding: 30px;
-  font-size: 24px;
-  font-weight: bold;
+
+.greeting-block {
+  max-width: 65vw;
+  margin: 8%;
 }
-
-.product-info ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-}
-
-.product-info ul li {
-  margin-bottom: 10px;
-}
-
-.product-info ul li span {
-  font-weight: normal;
-} */
 
 .item {
   height: 400px;
@@ -71,9 +51,64 @@
   font-weight: bold;
 }
 
+.carousel-control-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.carousel-control-buttons button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.all-products-home {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-home-view {
+  color: white;
+  background-color: black;
+  width: auto;
+  padding: 10px;
+  border-radius: 10px;
+  font-style: none;
+  margin: 5px;
+}
+
+.btn-home-cart {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  background-color: white;
+  border: #1e1e1e solid 1px;
+  width: auto;
+  padding: 10px;
+  border-radius: 10px;
+  font-style: none;
+  margin: 5px;
+}
+
+.buttons-to-buy {
+  align-self: center;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.price-product {
+  color: black;
+  font-size: 20px;
+}
+
 .name-product {
   color: black;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -100,33 +135,21 @@
   font-size: 20px;
 }
 
-/* .main-details-products {
-  margin: 3%;
-} */
-
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #e1e1e1;
-  color: #1e1e1e;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
 .main-details-products {
-  max-width: 75vw;
+  max-width: 65vw;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .main-details-products .carousel {
   display: flex;
   overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.main-details-products .all-products-home {
+  display: flex;
+  overflow-y: auto;
   scroll-behavior: smooth;
 }
 
@@ -137,8 +160,17 @@ body {
 .main-details-products .carousel .item {
   background-color: white;
   margin: 10px;
-  padding: 10px;
-  width: 280px;
+  width: 300px;
+  height: 350px;
+  border-radius: 16px;
+  flex: none;
+}
+
+.main-details-products .all-products-home .item {
+  background-color: white;
+  margin: 10px;
+  width: 300px;
+  height: 350px;
   border-radius: 16px;
   flex: none;
 }
@@ -149,52 +181,29 @@ body {
 }
 
 .main-details-products .carousel .item .info {
-  height: 140px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  height: auto;
+  text-align: left;
+  align-items: left;
+}
+
+.main-details-products .all-products-home .item .info {
+  height: auto;
+  text-align: left;
+  align-items: left;
 }
 
 .main-details-products .carousel .item .info span {
   display: block;
-  text-align: center;
+  text-align: left;
   color: #1e1e1e;
   padding: 5px;
   border-radius: 10px;
 }
 
-.main-details-products .carousel .item .info .name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 10px 0;
-  color: #00a8fb;
-}
-
-.main-details-products .carousel .item .info .oldPrice {
-  font-size: 0.8rem;
-  text-decoration: line-through;
-  flex-grow: 1;
-  color: #e81a5d;
-}
-
-.main-details-products .carousel .item .info .price {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  background-color: #ff7e3b;
-}
-
-.main-details-products .buttons {
-  width: 100%;
-  text-align: center;
-}
-
-.main-details-products .buttons button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.main-details-products .buttons button:first-child img {
-  transform: rotate(180deg);
+.main-details-products .all-products-home .item .info span {
+  display: block;
+  text-align: left;
+  color: #1e1e1e;
+  padding: 5px;
+  border-radius: 10px;
 }

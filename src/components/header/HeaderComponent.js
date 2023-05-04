@@ -2,6 +2,8 @@ import React from "react";
 import logo from "../../media/images/logo.jpeg"
 import "./HeaderComponent.css";
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 
 /* eslint-disable jsx-a11y/alt-text */
@@ -26,18 +28,31 @@ function HeaderComponent() {
                         <li><a href="/home-backoffice">Backoffice</a></li>
                         : <> </>
                     }
-
                     {userInfo == null ?
                         <>
                             <li><a href="/user">Acessar</a></li>
                             <li class="btn">Cadastrar</li>
                         </>
-                        : <>
-                            <li><a href={`/user/edit/${userInfo.idUser}`}>Meu perfil</a></li>
-                            <li class="btn" onClick={handleLogOut}>Sair</li>
-                        </>
+                        : <></>
                     }
 
+                    <li>
+                        <a href={`/user/edit/`}>
+                            <p className="count-items-cart">2</p>
+                            <FontAwesomeIcon size="2x" icon={faCartShopping} className="plus-cart" />
+                        </a>
+                    </li>
+
+                    {userInfo != null ?
+                        <>
+                            <li>
+                                <a href={`/user/edit/${userInfo.idUser}`}>
+                                    <FontAwesomeIcon size="2x" icon={faUserCircle} className="plus-cart" />
+                                </a>
+                            </li>
+                            <li class="btn" onClick={handleLogOut}>Sair</li>
+                        </> : <> </>
+                    }
                 </ul>
             </nav>
         </div>

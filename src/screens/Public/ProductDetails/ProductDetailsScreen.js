@@ -3,6 +3,10 @@ import "./ProductDetails.css"
 import greetingMessage from '../../../utils/HoursUtils'
 import ClipLoader from 'react-spinners/ClipLoader';
 import Banner from "../../../components/Banner/BannerComponent";
+import CardProducts from "../../../components/card-products/CardProducts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 
 
 function ProductDetailsScreen() {
@@ -49,25 +53,30 @@ function ProductDetailsScreen() {
                 </> :
                 <>
                     <main className="main-details-products">
-                        <h3 className="greeting-message">{greetingMessage()}</h3>
-                        <h4 className="initial-message">Visualize alguma de nossas ofertas para você!</h4>
-
+                        <h2 style={{ color: "black" }}>Novidades:</h2>
                         <div className="carousel" ref={carousel}>
                             {products.map((item) => {
-                                const { idProduct, nameProduct, cost, file } = item;
                                 return (
-                                    <div className="item" key={idProduct}>
-                                        <div className="image">
-                                            <img src={file} alt={nameProduct} />
-                                        </div>
-                                        <div className="info">
-                                            <span className="name">{nameProduct}</span>
-                                            <span className="   ">U$ {cost}</span>
-                                        </div>
-                                    </div>
+                                    <CardProducts item={item} />
                                 );
                             })}
+
                         </div>
+                        <div className="carousel-control-buttons">
+                            <button onClick={handleLeftClick}>
+                                <FontAwesomeIcon size="1x" icon={faChevronLeft} className="plus-cart" />
+                                Anterior
+                            </button>
+                            <button onClick={handleRightClick}>
+                                Próximo
+                                <FontAwesomeIcon size="1x" icon={faChevronRight} className="plus-cart" />
+                            </button>
+                        </div>
+
+                        <section className="all-products-home">
+
+                        </section>
+
                     </main>
                 </>
             }
