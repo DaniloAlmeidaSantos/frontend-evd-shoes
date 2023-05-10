@@ -94,6 +94,7 @@
 }
 
 .buttons-to-buy {
+  width: 100%;
   align-self: center;
   text-align: center;
   align-items: center;

@@ -6,12 +6,10 @@ import BackofficeProductsListScreen from "./screens/Backoffice/BackofficeProduct
 import BackofficeProductsRegister from "./screens/Backoffice/BackofficeRegisterProducts/BackofficeRegisterProducts";
 import SellProductsScreen from "./screens/Public/SellProductsScreen/SellProductScreen";
 import ProductDetailsScreen from "./screens/Public/ProductDetails/ProductDetailsScreen";
-<<<<<<< HEAD
-import EditAddressCustomer from "./screens/EditAddressScreen/EditAddressCustomer";
-=======
+import EditAddressCustomer from "./screens/User/Edit/UserEdit";
 import UserAuthenticate from "./screens/User/Authenticate/UserAuthenticate";
 import UserEdit from "./screens/User/Edit/UserEdit";
->>>>>>> a1941353a111496710ee1f12f04cfafe8b66163e
+import ProductCart from "./screens/Public/ProductCartScreen/ProductCartScreen";
 
 function App() {
     return (
@@ -26,11 +24,9 @@ function App() {
                 <Route path="/backoffice/products/list" element={<BackofficeProductsListScreen />} />
                 <Route path="/backoffice/products/register/:id?" element={<BackofficeProductsRegister />} />
                 <Route path="/sell/product/:id" element={<SellProductsScreen />} />
-<<<<<<< HEAD
                 <Route path="/products" element={<ProductDetailsScreen/>}/>
                 <Route path="/user/address/config" element={<EditAddressCustomer/>} />
-=======
->>>>>>> a1941353a111496710ee1f12f04cfafe8b66163e
+                <Route path="/product/cart" element={<ProductCart />} />
             </Routes>
         </div>
     );

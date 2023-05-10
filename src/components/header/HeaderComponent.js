@@ -10,6 +10,7 @@ import { faUserCircle, faCartShopping } from "@fortawesome/free-solid-svg-icons"
 function HeaderComponent() {
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const cartProducts = JSON.parse(localStorage.getItem('cart'));
 
     const handleLogOut = () => {
         localStorage.removeItem('userInfo');
@@ -36,12 +37,17 @@ function HeaderComponent() {
                         : <></>
                     }
 
-                    <li>
-                        <a href={`/user/edit/`}>
-                            <p className="count-items-cart">2</p>
-                            <FontAwesomeIcon size="2x" icon={faCartShopping} className="plus-cart" />
-                        </a>
-                    </li>
+                    {cartProducts != null ?
+                        <>
+                            <li>
+                                <a href={`/product/cart`}>
+                                    <p className="count-items-cart">{cartProducts.length}</p>
+                                    <FontAwesomeIcon size="2x" icon={faCartShopping} className="plus-cart" />
+                                </a>
+                            </li>
+                        </> : <></>
+                    }
+
 
                     {userInfo != null ?
                         <>

@@ -87,6 +87,21 @@ function ProductCart() {
         setFreights(freight);
     }
 
+    const handleInputQuantityChange = (e) => {
+        const { name, value } = e.target;
+        let product = JSON.parse(productCart)[name];
+        let newObject = JSON.parse(productCart);
+        
+        newObject.splice(name, 1);
+        product.quantity = parseInt(value);
+        newObject.push(product);
+
+        setProducts(newObject);
+        localStorage.removeItem('cart');
+        localStorage.setItem('cart', JSON.stringify(newObject));
+        window.location.reload(true);
+    }
+
     return (
         <>
             {
@@ -107,7 +122,17 @@ function ProductCart() {
                                             <p style={{ "fontSize": "22px", "color": "black", "marginBottom": "7%" }}>{data.nameProduct} </p>
                                             <section className="infos">
                                                 <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {data.cost} </p>
-                                                <button onClick={() => removeItem(index)}>Remover item</button>
+                                                <section className="input-define-quantity">
+                                                    <input
+                                                        type="number"
+                                                        name={index}
+                                                        placeholder="Defina a quantidade deste produto" 
+                                                        style={{width: "70px"}}
+                                                        value={data.quantity}
+                                                        onChange={handleInputQuantityChange}    
+                                                        />
+                                                </section>
+                                                <button className="btn-remove-product-cart" onClick={() => removeItem(index)}>Remover item</button>
                                             </section>
                                         </span>
                                     </span>

@@ -5,21 +5,43 @@ import { useParams } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Banner from "../../../components/Banner/BannerComponent";
-import banner from '../../../media/images/banner.jpeg';
 
 function SellProductsScreen() {
     const [formValues, setFormValues] = useState({});
     const [images, setImages] = useState([]);
+    const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(false);
     const [imageSelectedIndex, setImageSelectedIndex] = useState(0);
     const { id } = useParams();
 
     useEffect(() => {
-
         getProductsForm();
-        console.log(images)
     }, [])
+
+    const handleInputCartProduct = () => {
+        let products = localStorage.getItem('cart');
+
+        if (products == null) {
+            let newProducts = [];
+            newProducts.push({ id: id, quantity: quantity });
+            localStorage.setItem('cart', JSON.stringify(newProducts));
+            alert("Produto adicionado ao carrinho!");
+            return;
+        }
+
+        products = JSON.parse(products)
+
+        for (let p of products) {
+            if (p.id === id && p.quantity === quantity) return;
+        }
+
+        let newProducts = [...products];
+        newProducts.push({ id: id, quantity: quantity });
+        localStorage.setItem('cart', JSON.stringify(newProducts));
+        alert("Produto adicionado ao carrinho!");
+        return;
+
+    }
 
     const changeSelectedImage = (index) => setImageSelectedIndex(index)
 
@@ -89,15 +111,16 @@ function SellProductsScreen() {
                             <section className="infos">
                                 <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {formValues.cost} </p>
                             </section>
+                            <br />
                             <section className="products-others-infos">
                                 <a href="#" className="frete">Calcular frete</a>
                             </section>
                             <section className="products-buttons-sell">
                                 <a href="#" className="btn-buy">Comprar</a>
-                                <a href="#" className="btn-cart">
+                                <button onClick={handleInputCartProduct} className="btn-cart">
                                     <FontAwesomeIcon size="1x" icon={faCartPlus} className="plus-cart" />
                                     Carrinho
-                                </a>
+                                </button>
                             </section>
                         </section>
                     </main>
