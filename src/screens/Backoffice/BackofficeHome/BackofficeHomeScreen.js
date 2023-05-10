@@ -16,7 +16,7 @@ function BackofficeHomeScreen() {
   return (
     <main class="container">
       {
-        userInfo != null ?
+        userInfo != null && userInfo.userType !== "CLIENTE" ?
           <>
             <header class="initial">
               <h1>BACKOFFICE</h1>
@@ -47,7 +47,6 @@ function BackofficeHomeScreen() {
               </section>
             </section>
           </> : <>
-            <h1>Você não pode acessar essa rotina!</h1>
           </>
 
       }

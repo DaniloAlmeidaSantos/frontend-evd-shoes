@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Banner from "../../../components/Banner/BannerComponent";
+import banner from '../../../media/images/banner.jpeg';
 
 function SellProductsScreen() {
     const [formValues, setFormValues] = useState({});
@@ -14,7 +16,7 @@ function SellProductsScreen() {
     const { id } = useParams();
 
     useEffect(() => {
-        setLoading(true);
+
         getProductsForm();
         console.log(images)
     }, [])
@@ -22,6 +24,7 @@ function SellProductsScreen() {
     const changeSelectedImage = (index) => setImageSelectedIndex(index)
 
     const getProductsForm = async () => {
+        setLoading(true);
         let response = await fetch(
             'https://backend-evd-api.herokuapp.com/backoffice/product?id=' + id,
             {
@@ -46,8 +49,13 @@ function SellProductsScreen() {
 
     return (
         <>
-            {!loading ?
+            {loading ?
                 <>
+                    <div class='container-spinner'>
+                        <ClipLoader color={'#000'} size={150} />
+                    </div>
+                </>
+                : <>
                     <main className="main-product-sell">
                         <section className="products-images">
                             {images.map((data, index) => {
@@ -112,11 +120,7 @@ function SellProductsScreen() {
                             </text>
                         </section>
                     </section>
-                </> : (
-                    <div className='container-spinner'>
-                        <ClipLoader color={'#000'} size={150} />
-                    </div>
-                )
+                </>
             }
         </>
     );

@@ -70,7 +70,7 @@ function BackofficeUser() {
                 'cpf': data.cpf,
                 'email': data.email !== null ? data.email : null,
                 'password': data.password,
-                'isNewPassword': oldPassword === data.password,
+                'newPassword': oldPassword === data.password,
                 'userType': {
                     'typeId': data.typeId
                 }

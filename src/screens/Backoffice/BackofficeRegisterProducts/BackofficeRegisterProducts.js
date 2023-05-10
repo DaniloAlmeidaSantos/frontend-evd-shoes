@@ -145,7 +145,7 @@ function BackofficeProductsRegister() {
           </div>
         ) :
         <>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} style={{maxWidth: "500px"}}>
             <h1>Registrar Produto</h1>
             <label for="name">Nome do Produto:
               <input

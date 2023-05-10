@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./ProductDetails.css"
 import greetingMessage from '../../../utils/HoursUtils'
 import ClipLoader from 'react-spinners/ClipLoader';
+import Banner from "../../../components/Banner/BannerComponent";
+import CardProducts from "../../../components/card-products/CardProducts";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 
 
 function ProductDetailsScreen() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const carousel = useRef(null);
 
 
     useEffect(() => {
@@ -23,42 +29,59 @@ function ProductDetailsScreen() {
         }
     }
 
+    const handleLeftClick = (e) => {
+        e.preventDefault();
+        carousel.current.scrollLeft -= carousel.current.offsetWidth;
+    };
+
+    const handleRightClick = (e) => {
+        e.preventDefault();
+
+        carousel.current.scrollLeft += carousel.current.offsetWidth;
+    };
+
+    if (!products || !products.length) return null;
+
     return (
         <>
-            <main className="main-details-products">
-                <h3 className="greeting-message">{greetingMessage()}</h3>
-                <h4 className="initial-message">Visualize alguma de nossas ofertas para você!</h4>
-                {loading ?
-                    <>
-                        <div className='container-spinner'>
-                            <ClipLoader color={'#000'} size={150} />
-                        </div>
-                    </> :
-                    <>
-                        <div className="card-product">
-                            {products.map((data, index) => {
+            <Banner />
+            {loading ?
+                <>
+                    <div class='container-spinner'>
+                        <ClipLoader color={'#000'} size={150} />
+                    </div>
+                </> :
+                <>
+                    <main className="main-details-products">
+                        <h2 style={{ color: "black" }}>Novidades:</h2>
+                        <div className="carousel" ref={carousel}>
+                            {products.map((item) => {
                                 return (
-                                    <>
-                                        <a href={`/sell/product/${data.idProduct}`} class="product-images">
-                                            <figure>
-                                                <img src={data.file} className="image-file" alt="Descrição da imagem X" />
-                                                <figcaption className="brand-product" > {data.brand}</figcaption>
-                                                <figdetails className="name-product"> {data.nameProduct}  </figdetails>
-                                                <p>
-                                                    <productvalues> R$ {data.cost} </productvalues><br />
-                                                </p>
-                                            </figure>
-                                        </a>
-                                    </>
-                                )
+                                    <CardProducts item={item} />
+                                );
                             })}
-                        </div>
-                    </>
-                }
-            </main>
-        </>
 
-    )
+                        </div>
+                        <div className="carousel-control-buttons">
+                            <button onClick={handleLeftClick}>
+                                <FontAwesomeIcon size="1x" icon={faChevronLeft} className="plus-cart" />
+                                Anterior
+                            </button>
+                            <button onClick={handleRightClick}>
+                                Próximo
+                                <FontAwesomeIcon size="1x" icon={faChevronRight} className="plus-cart" />
+                            </button>
+                        </div>
+
+                        <section className="all-products-home">
+
+                        </section>
+
+                    </main>
+                </>
+            }
+        </>
+    );
 }
 
 export default ProductDetailsScreen;
