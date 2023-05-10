@@ -21,7 +21,7 @@ function ProductDetailsScreen() {
     }, []);
 
     const getProducts = async () => {
-        const data = await fetch("http://localhost:8080/backoffice/products/details");
+        const data = await fetch("https://backend-evd-api.herokuapp.com//backoffice/products/details");
         const getResults = await data.json();
         if (getResults !== null) {
             setProducts(getResults);

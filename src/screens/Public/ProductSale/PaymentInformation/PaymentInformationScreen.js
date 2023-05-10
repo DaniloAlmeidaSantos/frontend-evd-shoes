@@ -24,7 +24,7 @@ function PaymentInformationScreen() {
     }, []);
 
     const getAddresses = async () => {
-        const response = await fetch(`http://localhost:8080/backoffice/user/address?id=${userInfo.idUser}`);
+        const response = await fetch(`https://backend-evd-api.herokuapp.com//backoffice/user/address?id=${userInfo.idUser}`);
 
         if (response.status === 200) {
             response.json().then(res => {
@@ -37,7 +37,7 @@ function PaymentInformationScreen() {
 
     const getProducts = async () => {
         setLoading(true);
-        const response = await fetch('http://localhost:8080/products/cart', {
+        const response = await fetch('https://backend-evd-api.herokuapp.com//products/cart', {
             method: 'POST',
             body: productCart,
             headers: {
@@ -106,7 +106,7 @@ function PaymentInformationScreen() {
         }
 
         let response = await fetch(
-            'http://localhost:8080/products/confirm/sell',
+            'https://backend-evd-api.herokuapp.com//products/confirm/sell',
             {
                 method: 'POST',
                 body: JSON.stringify(jsonReq),
