@@ -10,6 +10,9 @@ import EditAddressCustomer from "./screens/User/Edit/UserEdit";
 import UserAuthenticate from "./screens/User/Authenticate/UserAuthenticate";
 import UserEdit from "./screens/User/Edit/UserEdit";
 import ProductCart from "./screens/Public/ProductCartScreen/ProductCartScreen";
+import DetailsSaleScreen from "./screens/Public/ProductSale/DetailsSale/DetailsSaleScreen";
+import PaymentInformationScreen from "./screens/Public/ProductSale/PaymentInformation/PaymentInformationScreen";
+import ConfirmSaleScreen from "./screens/Public/ProductSale/ConfirmSale/ConfirmSaleScreen";
 
 function App() {
     return (
@@ -27,6 +30,9 @@ function App() {
                 <Route path="/products" element={<ProductDetailsScreen/>}/>
                 <Route path="/user/address/config" element={<EditAddressCustomer/>} />
                 <Route path="/product/cart" element={<ProductCart />} />
+                <Route path="/sale/details" element={<DetailsSaleScreen />} />
+                <Route path="/sale/payment" element={<PaymentInformationScreen />} />
+                <Route path="/sale/confirm" element={<ConfirmSaleScreen />} />
             </Routes>
         </div>
     );

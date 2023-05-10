@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import './ProductCart.css';
 import ClipLoader from 'react-spinners/ClipLoader';
-import BuyFlowComponent from "../../../components/BuyFlow/BuyFlowComponent";
+import BuyFlowComponent from "../../../../components/BuyFlow/BuyFlowComponent";
 import { useNavigate } from "react-router-dom";
 
+function DetailsSaleScreen() {
 
-function ProductCart() {
     const productCart = localStorage.getItem('cart');
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const [products, setProducts] = useState([]);
@@ -15,7 +14,6 @@ function ProductCart() {
     const [addresses, setAddresses] = useState([]);
     const [freights, setFreights] = useState([]);
     const navigate = useNavigate();
-
 
     useEffect(() => {
         getProducts();
@@ -33,14 +31,12 @@ function ProductCart() {
     }
 
     const getAddresses = async () => {
-        if (userInfo != null) {
-            const response = await fetch(`http://localhost:8080/backoffice/user/address?id=${userInfo.idUser}`);
+        const response = await fetch(`http://localhost:8080/backoffice/user/address?id=${userInfo.idUser}`);
 
-            if (response.status === 200) {
-                response.json().then(res => {
-                    setAddresses(res);
-                })
-            }
+        if (response.status === 200) {
+            response.json().then(res => {
+                setAddresses(res);
+            })
         }
 
         setLoading(false)
@@ -92,31 +88,9 @@ function ProductCart() {
         setFreights(freight);
     }
 
-    const handleInputQuantityChange = (e) => {
-        const { name, value } = e.target;
-        let product = JSON.parse(productCart)[name];
-        let newObject = JSON.parse(productCart);
-
-        newObject.splice(name, 1);
-        product.quantity = parseInt(value);
-        newObject.push(product);
-
-        setProducts(newObject);
-        localStorage.removeItem('cart');
-        localStorage.setItem('cart', JSON.stringify(newObject));
-        window.location.reload(true);
-    }
-
-    const handleNavigate = () => {
-        if (userInfo !== null) {
-            navigate("/sale/details");
-        } else {
-            navigate("/user");
-        }
-    }
-
     return (
         <>
+            <BuyFlowComponent flowStatus={1} />
             {
                 loading ?
                     <>
@@ -135,16 +109,6 @@ function ProductCart() {
                                             <p style={{ "fontSize": "22px", "color": "black", "marginBottom": "7%" }}>{data.nameProduct} </p>
                                             <section className="infos">
                                                 <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {data.cost} </p>
-                                                <section className="input-define-quantity">
-                                                    <input
-                                                        type="number"
-                                                        name={index}
-                                                        placeholder="Defina a quantidade deste produto"
-                                                        style={{ width: "70px" }}
-                                                        value={data.quantity}
-                                                        onChange={handleInputQuantityChange}
-                                                    />
-                                                </section>
                                                 <button className="btn-remove-product-cart" onClick={() => removeItem(index)}>Remover item</button>
                                             </section>
                                         </span>
@@ -160,33 +124,27 @@ function ProductCart() {
                             </span>
                             <hr />
                             <span className="cart-sub-total">
-                                <p><b>Sub-Total: </b></p>
+                                <p><b>Total: </b></p>
                                 <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice} </p>
                             </span>
                             <br />
                             <section className="calculate-freight-section">
+                                <p>Selecione o endereço para calcular frete: </p>
                                 {
-                                    userInfo != null ?
-                                        <>
-                                            <p>Selecione o endereço para calcular frete: </p>
-                                            {
-                                                addresses.map((data) => {
-                                                    return (
-                                                        <>
-                                                            <section className="unit-freight">
-                                                                <p>{data.streetName} - {data.cep} </p>
-                                                                <button className="btn-calculate-freight" onClick={() => calculateFreight()}>Pesquisar fretes disponíveis</button>
-                                                            </section>
-                                                        </>
-                                                    );
-                                                })
-                                            }
-                                        </> : <> </>
+                                    addresses.map((data) => {
+                                        return (
+                                            <>
+                                                <section className="unit-freight">
+                                                    <p>{data.streetName} - {data.cep} </p>
+                                                    <button className="btn-calculate-freight" onClick={() => calculateFreight()}>Pesquisar fretes disponíveis</button>
+                                                </section>
+                                            </>
+                                        );
+                                    })
                                 }
-
                             </section>
                             <br />
-                            <button className="btn-continue-buy" onClick={() => handleNavigate()}>Continuar</button>
+                            <button className="btn-continue-buy" onClick={() => navigate('/sale/payment')} >Ir para o pagamento</button>
                         </section>
                     </main>
             }
@@ -195,4 +153,4 @@ function ProductCart() {
 
 }
 
-export default ProductCart;
+export default DetailsSaleScreen;

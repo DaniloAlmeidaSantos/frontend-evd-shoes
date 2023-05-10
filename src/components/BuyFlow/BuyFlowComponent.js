@@ -10,17 +10,17 @@ function BuyFlowComponent(props) {
        <header className="flow-header">
             <hr/>
             <section className="flow-status">
-                <FontAwesomeIcon color="red" icon={faBasketballBall} size="6x" />
+                <FontAwesomeIcon color="red" icon={faBasketballBall} size="5x" />
                 <p>Detalhes</p>
             </section>
             <hr style={{borderColor: flowStatus > 1 ? "red" : "black" }} />
             <section className="flow-status">
-                <FontAwesomeIcon color={flowStatus > 1 ? "red" : "black"} icon={faBasketballBall} size="6x" />
+                <FontAwesomeIcon color={flowStatus > 1 ? "red" : "black"} icon={faBasketballBall} size="5x" />
                 <p>Pagamento</p>
             </section>
             <hr style={{borderColor: flowStatus > 2 ? "red" : "black" }} />
             <section className="flow-status">
-                <FontAwesomeIcon color={flowStatus > 2 ? "red" : "black"} icon={faBasketballBall} size="6x" />
+                <FontAwesomeIcon color={flowStatus > 2 ? "red" : "black"} icon={faBasketballBall} size="5x" />
                 <p>Confirmar</p>
             </section>
             <hr style={{borderColor: flowStatus > 2 ? "red" : "black" }}/>
