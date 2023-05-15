@@ -41,7 +41,7 @@ function HeaderComponent() {
                         <>
                             <li>
                                 <a href={`/product/cart`}>
-                                    <p className="count-items-cart">{cartProducts.length}</p>
+                                    <p className="count-items-cart">{cartProducts.products.length}</p>
                                     <FontAwesomeIcon size="2x" icon={faCartShopping} className="plus-cart" />
                                 </a>
                             </li>

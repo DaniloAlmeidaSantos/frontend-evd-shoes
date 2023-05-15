@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
 import BuyFlowComponent from "../../../../components/BuyFlow/BuyFlowComponent";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PaymentInformationScreen() {
 
@@ -10,10 +10,7 @@ function PaymentInformationScreen() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalProductsCost, setTotalProductsCost] = useState(0);
     const [addresses, setAddresses] = useState([]);
-    const [freights, setFreights] = useState([]);
     const [formValues, setFormValues] = useState({});
     const [isCard, setIsCard] = useState(true);
     const navigate = useNavigate();
@@ -57,28 +54,6 @@ function PaymentInformationScreen() {
                 }
             });
         }
-    }
-
-    const calculateFreight = () => {
-        const freight = [
-            {
-                cost: 20.00,
-                days: 10,
-                enterprise: "Sedex"
-            },
-            {
-                cost: 12.00,
-                days: 20,
-                enterprise: "Loggi"
-            },
-            {
-                cost: 22.00,
-                days: 2,
-                enterprise: "Fedex"
-            }
-        ];
-
-        setFreights(freight);
     }
 
     const handleInputChange = (e) => {
@@ -191,53 +166,6 @@ function PaymentInformationScreen() {
                                 </div>
                             </form>
                         </section>
-                        <main className="container-cart-product">
-                            <section className="cart-products-section">
-                                {products.map((data, index) => {
-                                    return (
-                                        <span className="products-cart-info">
-                                            <img className="cart-image" src={data.file} alt="Produto no carrinho" />
-                                            <span className="products-description">
-                                                <h2 className="product-title">{data.brand}</h2>
-                                                <p style={{ "fontSize": "22px", "color": "black", "marginBottom": "7%" }}>{data.nameProduct} </p>
-                                                <section className="infos">
-                                                    <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {data.cost} </p>
-                                                </section>
-                                            </span>
-                                        </span>
-                                    );
-                                })}
-                            </section>
-                            <section className="cart-products-info">
-                                <span className="short-desc-product-info">Resumo do carrinho: </span>
-                                <span className="total-products">
-                                    <p style={{ fontSize: "24px" }}>{products.length} produtos</p>
-                                    <p style={{ fontSize: "24px" }}>R$ {totalProductsCost}</p>
-                                </span>
-                                <hr />
-                                <span className="cart-sub-total">
-                                    <p><b>Total: </b></p>
-                                    <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice} </p>
-                                </span>
-                                <br />
-                                <section className="calculate-freight-section">
-                                    <p>Selecione o endereço para calcular frete: </p>
-                                    {
-                                        addresses.map((data) => {
-                                            return (
-                                                <>
-                                                    <section className="unit-freight">
-                                                        <p>{data.streetName} - {data.cep} </p>
-                                                        <button className="btn-calculate-freight" onClick={() => calculateFreight()}>Pesquisar fretes disponíveis</button>
-                                                    </section>
-                                                </>
-                                            );
-                                        })
-                                    }
-                                </section>
-                                <br />
-                            </section>
-                        </main>
                     </>
             }
         </>

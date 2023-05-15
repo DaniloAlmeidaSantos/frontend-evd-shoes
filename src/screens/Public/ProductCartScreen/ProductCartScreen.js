@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ProductCart.css';
 import ClipLoader from 'react-spinners/ClipLoader';
-import BuyFlowComponent from "../../../components/BuyFlow/BuyFlowComponent";
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,7 +12,8 @@ function ProductCart() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalProductsCost, setTotalProductsCost] = useState(0);
     const [addresses, setAddresses] = useState([]);
-    const [freights, setFreights] = useState([]);
+    const [freight, setFreight] = useState(JSON.parse(productCart).freight);
+    const [ idAddressDefault, setIdAddressDefault ] = useState(0);
     const navigate = useNavigate();
 
 
@@ -23,12 +23,12 @@ function ProductCart() {
     }, []);
 
     function removeItem(index) {
-        let newProducts = JSON.parse(productCart);
+        let newProducts = JSON.parse(productCart).products;
         newProducts.splice(index, 1);
 
         setProducts(newProducts);
         localStorage.removeItem('cart');
-        localStorage.setItem('cart', JSON.stringify(newProducts));
+        localStorage.setItem('cart', JSON.stringify({products: newProducts, freight: freight, address: idAddressDefault}));
         window.location.reload(true);
     }
 
@@ -39,6 +39,12 @@ function ProductCart() {
             if (response.status === 200) {
                 response.json().then(res => {
                     setAddresses(res);
+                    for (let address of res) {
+                        if (address.deliveryAddress === "S") {
+                            setIdAddressDefault(address.idAddress);
+                            return;
+                        }
+                    }
                 })
             }
         }
@@ -48,9 +54,10 @@ function ProductCart() {
 
     const getProducts = async () => {
         setLoading(true);
+        let cart = JSON.parse(productCart);
         const response = await fetch('https://backend-evd-api.herokuapp.com/products/cart', {
             method: 'POST',
-            body: productCart,
+            body: JSON.stringify(cart.products),
             headers: {
                 'Content-type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
@@ -70,32 +77,12 @@ function ProductCart() {
         }
     }
 
-    const calculateFreight = () => {
-        const freight = [
-            {
-                cost: 20.00,
-                days: 10,
-                enterprise: "Sedex"
-            },
-            {
-                cost: 12.00,
-                days: 20,
-                enterprise: "Loggi"
-            },
-            {
-                cost: 22.00,
-                days: 2,
-                enterprise: "Fedex"
-            }
-        ];
-
-        setFreights(freight);
-    }
-
     const handleInputQuantityChange = (e) => {
         const { name, value } = e.target;
-        let product = JSON.parse(productCart)[name];
-        let newObject = JSON.parse(productCart);
+        let product = JSON.parse(productCart).products[name];
+        let newObject = JSON.parse(productCart).products;
+
+        console.log(product, newObject)
 
         newObject.splice(name, 1);
         product.quantity = parseInt(value);
@@ -103,7 +90,7 @@ function ProductCart() {
 
         setProducts(newObject);
         localStorage.removeItem('cart');
-        localStorage.setItem('cart', JSON.stringify(newObject));
+        localStorage.setItem('cart', JSON.stringify({products: newObject, freight: freight, address: idAddressDefault}));
         window.location.reload(true);
     }
 
@@ -113,6 +100,15 @@ function ProductCart() {
         } else {
             navigate("/user");
         }
+    }
+
+    const handleChangeRadioButton = (value, idAddress) => {
+        let cart = JSON.parse(productCart);
+        localStorage.removeItem('cart');
+        cart = {...cart, freight: value};
+        cart = {...cart, address: idAddress};
+        localStorage.setItem('cart', JSON.stringify(cart));
+        setFreight(value);
     }
 
     return (
@@ -173,14 +169,57 @@ function ProductCart() {
                                                 addresses.map((data) => {
                                                     return (
                                                         <>
-                                                            <section className="unit-freight">
-                                                                <p>{data.streetName} - {data.cep} </p>
-                                                                <button className="btn-calculate-freight" onClick={() => calculateFreight()}>Pesquisar fretes disponíveis</button>
-                                                            </section>
+                                                            {
+                                                                data.deliveryAddress === "S" ?
+                                                                    <>
+                                                                        <section className="unit-freight">
+                                                                            <p>{data.streetName} - {data.cep} </p>
+                                                                            <label style={{ fontSize: "16px", width: "70px", textAlign: "center" }}>
+                                                                                Sedex:
+                                                                                <br />
+                                                                                <input
+                                                                                    name="freight"
+                                                                                    value="Sedex"
+                                                                                    type="radio"
+                                                                                    onChange={() => handleChangeRadioButton("Sedex", data.idAddress)}
+                                                                                    className="off" id="off"
+                                                                                    checked={freight === "Sedex"}
+                                                                                />
+                                                                            </label>
+                                                                            <label style={{ fontSize: "16px", width: "70px", textAlign: "center" }}>
+                                                                                Feedex:
+                                                                                <br />
+                                                                                <input
+                                                                                    name="freight"
+                                                                                    value="Feedex"
+                                                                                    type="radio"
+                                                                                    onChange={() => handleChangeRadioButton("Feedex", data.idAddress)}
+                                                                                    className="off" id="off"
+                                                                                    checked={freight === "Feedex"}
+                                                                                />
+                                                                            </label>
+                                                                            <label style={{ fontSize: "16px", width: "70px", textAlign: "center" }}>
+                                                                                Loggi:
+                                                                                <br />
+                                                                                <input
+                                                                                    name="freight"
+                                                                                    value="Loggi"
+                                                                                    type="radio"
+                                                                                    onChange={() => handleChangeRadioButton("Loggi", data.idAddress)}
+                                                                                    className="off" id="off"
+                                                                                    checked={freight === "Loggi"}
+                                                                                />
+                                                                            </label>
+                                                                        </section>
+                                                                    </> : <> </>
+                                                            }
                                                         </>
                                                     );
                                                 })
                                             }
+                                            <button className="btn-calculate-freight">
+                                                Alterar endereço para frete
+                                            </button>
                                         </> : <> </>
                                 }
 
