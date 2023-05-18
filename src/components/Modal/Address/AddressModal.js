@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './AddressModal.css';
 
 function AddressModal(props) {
+    // Added new parameter to define type modal (AuthenticateScreen or CartScreen)
     let { addresses } = props;
     const [formValues, setFormValues] = useState({});
 
@@ -13,7 +14,8 @@ function AddressModal(props) {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
-
+    
+    // Alter this component to returnin unique address if modal is to cart
     const handleSearchPerCEP = async () => {
         const result = await fetch(`https://viacep.com.br/ws/${formValues.cep}/json/`);
 

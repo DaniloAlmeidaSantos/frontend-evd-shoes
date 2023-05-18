@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import './ProductCart.css';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useNavigate } from "react-router-dom";
-
+import Calculator from "../../../utils/CalculateFreight";
+import AddressModal from '../../../components/Modal/Address/AddressModal';
 
 function ProductCart() {
     const productCart = localStorage.getItem('cart');
@@ -11,9 +12,10 @@ function ProductCart() {
     const [loading, setLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalProductsCost, setTotalProductsCost] = useState(0);
-    const [addresses, setAddresses] = useState([]);
+    const [addresses, setAddresses] = useState([]); // Alter backend to return delivery address
+    const [showModal, setShowModal] = useState(false);
     const [freight, setFreight] = useState(JSON.parse(productCart).freight);
-    const [ idAddressDefault, setIdAddressDefault ] = useState(0);
+    const [idAddressDefault, setIdAddressDefault] = useState(0);
     const navigate = useNavigate();
 
 
@@ -28,7 +30,7 @@ function ProductCart() {
 
         setProducts(newProducts);
         localStorage.removeItem('cart');
-        localStorage.setItem('cart', JSON.stringify({products: newProducts, freight: freight, address: idAddressDefault}));
+        localStorage.setItem('cart', JSON.stringify({ products: newProducts, freight: freight, address: idAddressDefault }));
         window.location.reload(true);
     }
 
@@ -82,15 +84,13 @@ function ProductCart() {
         let product = JSON.parse(productCart).products[name];
         let newObject = JSON.parse(productCart).products;
 
-        console.log(product, newObject)
-
         newObject.splice(name, 1);
         product.quantity = parseInt(value);
         newObject.push(product);
 
         setProducts(newObject);
         localStorage.removeItem('cart');
-        localStorage.setItem('cart', JSON.stringify({products: newObject, freight: freight, address: idAddressDefault}));
+        localStorage.setItem('cart', JSON.stringify({ products: newObject, freight: freight, address: idAddressDefault }));
         window.location.reload(true);
     }
 
@@ -105,8 +105,8 @@ function ProductCart() {
     const handleChangeRadioButton = (value, idAddress) => {
         let cart = JSON.parse(productCart);
         localStorage.removeItem('cart');
-        cart = {...cart, freight: value};
-        cart = {...cart, address: idAddress};
+        cart = { ...cart, freight: value };
+        cart = { ...cart, address: idAddress };
         localStorage.setItem('cart', JSON.stringify(cart));
         setFreight(value);
     }
@@ -154,10 +154,25 @@ function ProductCart() {
                                 <p style={{ fontSize: "24px" }}>{products.length} produtos</p>
                                 <p style={{ fontSize: "24px" }}>R$ {totalProductsCost}</p>
                             </span>
+                            {freight != null ?
+                                <>
+                                    <span className="total-products">
+                                        <p style={{ fontSize: "24px" }}>{
+                                            addresses.map(data => {
+                                                if (data.deliveryAddress === "S") {
+                                                    return data.streetName;
+                                                }
+                                            })
+                                        }</p>
+                                        <p style={{ fontSize: "24px" }}>R$ {Calculator(freight)}</p>
+                                    </span>
+                                </> : <></>
+
+                            }
                             <hr />
                             <span className="cart-sub-total">
                                 <p><b>Sub-Total: </b></p>
-                                <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice} </p>
+                                <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice + Calculator(freight)} </p>
                             </span>
                             <br />
                             <section className="calculate-freight-section">
@@ -217,9 +232,18 @@ function ProductCart() {
                                                     );
                                                 })
                                             }
-                                            <button className="btn-calculate-freight">
+                                            <button className="btn-calculate-freight" onClick={() => setShowModal(true)}>
                                                 Alterar endereço para frete
                                             </button>
+                                            {showModal ?
+                                                <>
+                                                    <AddressModal
+                                                        addresses={addresses}
+                                                        show={showModal}
+                                                        onHide={() => setShowModal(false)}
+                                                    />
+                                                </> : <></>
+                                            }
                                         </> : <> </>
                                 }
 

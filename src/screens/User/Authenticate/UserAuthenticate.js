@@ -247,7 +247,6 @@ function UserAuthenticate() {
                       onHide={() => setShowModal(false)}
                     />
                   </> : <></>
-
                 }
               </div>
             </div>
