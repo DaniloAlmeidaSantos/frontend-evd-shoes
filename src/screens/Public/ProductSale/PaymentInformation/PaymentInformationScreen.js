@@ -65,7 +65,10 @@ function PaymentInformationScreen() {
         e.preventDefault();
 
         let jsonReq = [];
+        // Pensar de alguma forma de incluir um novo endereço
+        const address = JSON.parse(productCart).address;
 
+        // Alter backend to table receive ID_SALE into table TB_SALES_HISTORIC with FK in TB_SALE
         for (let prod of products) {
             jsonReq.push(
                 {
@@ -73,7 +76,7 @@ function PaymentInformationScreen() {
                     idProduct: prod.idProduct,
                     quantity: prod.quantity,
                     totalPrice: (prod.quantity * prod.cost),
-                    idAddress: addresses[0].idAddress,
+                    idAddress: address.idAddress,
                     idPayment: isCard ? 1 : 2,
                     status: isCard ? "AGUARDANDO BOLETO" : "AGUARDANDO EMISSAO"
                 }
@@ -81,7 +84,7 @@ function PaymentInformationScreen() {
         }
 
         let response = await fetch(
-            'https://backend-evd-api.herokuapp.com/products/confirm/sell',
+            'http://localhost:8080/products/confirm/sell',
             {
                 method: 'POST',
                 body: JSON.stringify(jsonReq),

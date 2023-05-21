@@ -179,10 +179,12 @@
 .image img{
   width: 100%;
   height: 200px;
+  object-fit: contain;
 }
 
 .main-details-products .carousel .item .info {
   height: auto;
+  width: 100%;
   text-align: left;
   align-items: left;
 }
