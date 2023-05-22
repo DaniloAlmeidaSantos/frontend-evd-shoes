@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
 import BuyFlowComponent from "../../../../components/BuyFlow/BuyFlowComponent";
 import { useNavigate } from "react-router-dom";
+import Calculator from "../../../../utils/CalculateFreight";
+
 
 function PaymentInformationScreen() {
 
@@ -10,33 +12,21 @@ function PaymentInformationScreen() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [addresses, setAddresses] = useState([]);
     const [formValues, setFormValues] = useState({});
+    const [totalPrice, setTotalPrice] = useState(0);
     const [isCard, setIsCard] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         getProducts();
-        getAddresses();
     }, []);
-
-    const getAddresses = async () => {
-        const response = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/user/address?id=${userInfo.idUser}`);
-
-        if (response.status === 200) {
-            response.json().then(res => {
-                setAddresses(res);
-            })
-        }
-
-        setLoading(false)
-    }
 
     const getProducts = async () => {
         setLoading(true);
+        const json = JSON.parse(productCart).products;
         const response = await fetch('https://backend-evd-api.herokuapp.com/products/cart', {
             method: 'POST',
-            body: productCart,
+            body: JSON.stringify(json),
             headers: {
                 'Content-type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
@@ -47,11 +37,10 @@ function PaymentInformationScreen() {
             response.json().then(res => {
                 setProducts(res);
                 let total = 0;
-                for (let totalPrice of res) {
-                    total = total + parseFloat(totalPrice.totalPrice);
-                    setTotalPrice(total);
-                    setTotalProductsCost(total);
-                }
+                const freight = Calculator(JSON.parse(productCart).freight);
+                res.map(data => total = total + (data.quantity * data.cost));
+                setTotalPrice(freight + total);
+                setLoading(false);
             });
         }
     }
@@ -63,26 +52,23 @@ function PaymentInformationScreen() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         let jsonReq = [];
-        // Pensar de alguma forma de incluir um novo endereço
         const address = JSON.parse(productCart).address;
-
-        // Alter backend to table receive ID_SALE into table TB_SALES_HISTORIC with FK in TB_SALE
         for (let prod of products) {
             jsonReq.push(
                 {
                     idUser: userInfo.idUser,
                     idProduct: prod.idProduct,
                     quantity: prod.quantity,
-                    totalPrice: (prod.quantity * prod.cost),
+                    totalPrice: totalPrice,
                     idAddress: address.idAddress,
+                    saleAddress: `${address.cep} - ${address.streetName}, ${address.number} - ${address.complement}`,
                     idPayment: isCard ? 1 : 2,
                     status: isCard ? "AGUARDANDO BOLETO" : "AGUARDANDO EMISSAO"
                 }
             )
         }
-
+       
         let response = await fetch(
             'http://localhost:8080/products/confirm/sell',
             {
@@ -97,7 +83,7 @@ function PaymentInformationScreen() {
         if (response.status === 200) {
             localStorage.removeItem('cart');
             response.json().then(resp => {
-                navigate('/sale/confirm')
+                    navigate('/sale/confirm', {state:{orderNum: JSON.stringify(resp.message)}})
             });
         } else {
             alert('Erro ao finalizar o pedido, tente mais tarde!');
@@ -116,6 +102,7 @@ function PaymentInformationScreen() {
                     </> :
                     <>
                         <section className="container-login">
+                            <h3 style={{color: "green"}}>Total a pagar: {totalPrice}</h3>
                             <ul className="nav-links">
                                 <li><span onClick={() => setIsCard(true)} >Pagar com cartão</span></li>
                                 <li><span onClick={() => setIsCard(false)}>Pagar com boleto</span></li>
