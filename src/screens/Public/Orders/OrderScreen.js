@@ -17,7 +17,7 @@ function OrderScreen() {
     }, []);
 
     const getProducts = async () => {
-        const response = await fetch(`http://localhost:8080/products/orders/summary?id=${id}`);
+        const response = await fetch(`https://backend-evd-api.herokuapp.com/products/orders/summary?id=${id}`);
         const user = JSON.parse(localStorage.getItem('userInfo'));
         setUserInfo(user);
 
@@ -45,7 +45,7 @@ function OrderScreen() {
         }
 
         const response = await fetch(
-            'http://localhost:8080/products/order/update?id=' + id,
+            'https://backend-evd-api.herokuapp.com/products/order/update?id=' + id,
             {
                 method: 'PUT',
                 body: JSON.stringify(json),

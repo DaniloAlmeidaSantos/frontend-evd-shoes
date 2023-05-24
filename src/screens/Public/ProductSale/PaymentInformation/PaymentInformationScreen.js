@@ -70,7 +70,7 @@ function PaymentInformationScreen() {
         }
        
         let response = await fetch(
-            'http://localhost:8080/products/confirm/sell',
+            'https://backend-evd-api.herokuapp.com/products/confirm/sell',
             {
                 method: 'POST',
                 body: JSON.stringify(jsonReq),

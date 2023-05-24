@@ -11,7 +11,7 @@ function BackOfficeUpdateStatus() {
     }, []);
 
     const getProducts = async () => {
-        const data = await fetch(`http://localhost:8080/products/orders/stockist`);
+        const data = await fetch(`https://backend-evd-api.herokuapp.com/products/orders/stockist`);
         const getResults = await data.json();
         if (getResults !== null) {
             setProducts(getResults);

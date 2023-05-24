@@ -37,7 +37,7 @@ function ProductCart() {
 
     const getAddresses = async () => {
         if (userInfo != null && !productCart.address) {
-            const response = await fetch(`http://localhost:8080/backoffice/user/address?id=${userInfo.idUser}`);
+            const response = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/user/address?id=${userInfo.idUser}`);
 
             if (response.status === 200) {
                 response.json().then(res => {
@@ -59,7 +59,7 @@ function ProductCart() {
     const getProducts = async () => {
         setLoading(true);
         let cart = JSON.parse(productCart);
-        const response = await fetch('http://localhost:8080/products/cart', {
+        const response = await fetch('https://backend-evd-api.herokuapp.com/products/cart', {
             method: 'POST',
             body: JSON.stringify(cart.products),
             headers: {
@@ -148,7 +148,7 @@ function ProductCart() {
     const handleSearchAddressToUser = async () => {
         
         if (userInfo != null && showAddressUser) {
-            const response = await fetch(`http://localhost:8080/backoffice/user/address?id=${userInfo.idUser}`);
+            const response = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/user/address?id=${userInfo.idUser}`);
 
             if (response.status === 200) {
                 response.json().then(res => {
