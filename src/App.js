@@ -14,6 +14,7 @@ import DetailsSaleScreen from "./screens/Public/ProductSale/DetailsSale/DetailsS
 import PaymentInformationScreen from "./screens/Public/ProductSale/PaymentInformation/PaymentInformationScreen";
 import ConfirmSaleScreen from "./screens/Public/ProductSale/ConfirmSale/ConfirmSaleScreen";
 import GetOrders from "./screens/Public/Orders/OrdersScreen";
+import OrderScreen from "./screens/Public/Orders/OrderScreen";
 
 function App() {
     return (
@@ -34,7 +35,8 @@ function App() {
                 <Route path="/sale/details" element={<DetailsSaleScreen />} />
                 <Route path="/sale/payment" element={<PaymentInformationScreen />} />
                 <Route path="/sale/confirm" element={<ConfirmSaleScreen />} />
-                <Route path="orders" element={<GetOrders />} /> 
+                <Route path="/orders" element={<GetOrders />} /> 
+                <Route path="/orders/details/:id" element={<OrderScreen /> } />
             </Routes>
         </div>
     );

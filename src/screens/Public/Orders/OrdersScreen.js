@@ -46,15 +46,18 @@ function GetOrders() {
                                             <span className="products-description">
                                                 <h2 className="product-title">{data.brand}</h2>
                                                 <p style={{ "fontSize": "26px", "color": "black", "marginBottom": "7%" }}>
-                                                    <b style={{ "fontSize": "28px", "color": "green" }}>Nome do produto: </b>
+                                                    <b style={{ "fontSize": "28px" }}>Nome do produto: </b>
                                                     {data.nameProduct}
                                                 </p>
                                                 <section className="infos">
                                                     <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>Número do pedido: </span> {data.idSale} </p>
                                                     <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>Preço total do pedido: R$ </span> {data.price} </p>
-                                                    <p style={{ "fontSize": "24px", color: "green" }}><span style={{ "fontSize": "26px" }}>Unidades vendida: </span> {data.quantity} </p>
+                                                    <p style={{ "fontSize": "24px", color: "black" }}><span style={{ "fontSize": "26px" }}>Unidades vendida: </span> {data.quantity} </p>
                                                     <p style={{ "fontSize": "18px", color: "red" }}><span style={{ "fontSize": "18px" }}>Data da venda: </span> <b>{data.date} </b></p>
                                                     <p style={{ "fontSize": "18px", color: "red" }}><span style={{ "fontSize": "18px" }}>Status do pedido: </span> <b>{data.status} </b></p>
+                                                    <a href={`/orders/details/${data.idSale}`}>
+                                                        <p style={{"fontSize": "24px", color: "green"}}>Ver detalhes</p>
+                                                    </a>
                                                 </section>
                                             </span>
                                         </span>

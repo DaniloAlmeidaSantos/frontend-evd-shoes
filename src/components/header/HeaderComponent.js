@@ -33,7 +33,10 @@ function HeaderComponent() {
                     }
 
                     {userInfo != null && userInfo.userType !== "CLIENTE" ?
-                        <li><a href="/home-backoffice">Backoffice</a></li>
+                        <>
+                            <li><a href="/home-backoffice">Pedidos pendentes</a></li>
+                            <li><a href="/home-backoffice">Backoffice</a></li>
+                        </>
                         : <> </>
                     }
                     {userInfo == null ?
