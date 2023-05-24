@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
 import BuyFlowComponent from "../../../../components/BuyFlow/BuyFlowComponent";
-import { json, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Calculator from "../../../../utils/CalculateFreight";
+
 
 function PaymentInformationScreen() {
 
@@ -10,36 +12,21 @@ function PaymentInformationScreen() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalProductsCost, setTotalProductsCost] = useState(0);
-    const [addresses, setAddresses] = useState([]);
-    const [freights, setFreights] = useState([]);
     const [formValues, setFormValues] = useState({});
+    const [totalPrice, setTotalPrice] = useState(0);
     const [isCard, setIsCard] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         getProducts();
-        getAddresses();
     }, []);
-
-    const getAddresses = async () => {
-        const response = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/user/address?id=${userInfo.idUser}`);
-
-        if (response.status === 200) {
-            response.json().then(res => {
-                setAddresses(res);
-            })
-        }
-
-        setLoading(false)
-    }
 
     const getProducts = async () => {
         setLoading(true);
+        const json = JSON.parse(productCart).products;
         const response = await fetch('https://backend-evd-api.herokuapp.com/products/cart', {
             method: 'POST',
-            body: productCart,
+            body: JSON.stringify(json),
             headers: {
                 'Content-type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
@@ -50,35 +37,12 @@ function PaymentInformationScreen() {
             response.json().then(res => {
                 setProducts(res);
                 let total = 0;
-                for (let totalPrice of res) {
-                    total = total + parseFloat(totalPrice.totalPrice);
-                    setTotalPrice(total);
-                    setTotalProductsCost(total);
-                }
+                const freight = Calculator(JSON.parse(productCart).freight);
+                res.map(data => total = total + (data.quantity * data.cost));
+                setTotalPrice(freight + total);
+                setLoading(false);
             });
         }
-    }
-
-    const calculateFreight = () => {
-        const freight = [
-            {
-                cost: 20.00,
-                days: 10,
-                enterprise: "Sedex"
-            },
-            {
-                cost: 12.00,
-                days: 20,
-                enterprise: "Loggi"
-            },
-            {
-                cost: 22.00,
-                days: 2,
-                enterprise: "Fedex"
-            }
-        ];
-
-        setFreights(freight);
     }
 
     const handleInputChange = (e) => {
@@ -88,25 +52,25 @@ function PaymentInformationScreen() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         let jsonReq = [];
-
+        const address = JSON.parse(productCart).address;
         for (let prod of products) {
             jsonReq.push(
                 {
                     idUser: userInfo.idUser,
                     idProduct: prod.idProduct,
                     quantity: prod.quantity,
-                    totalPrice: (prod.quantity * prod.cost),
-                    idAddress: addresses[0].idAddress,
+                    totalPrice: totalPrice,
+                    idAddress: address.idAddress,
+                    saleAddress: `${address.cep} - ${address.streetName}, ${address.number} - ${address.complement}`,
                     idPayment: isCard ? 1 : 2,
                     status: isCard ? "AGUARDANDO BOLETO" : "AGUARDANDO EMISSAO"
                 }
             )
         }
-
+       
         let response = await fetch(
-            'https://backend-evd-api.herokuapp.com/products/confirm/sell',
+            'http://localhost:8080/products/confirm/sell',
             {
                 method: 'POST',
                 body: JSON.stringify(jsonReq),
@@ -119,7 +83,7 @@ function PaymentInformationScreen() {
         if (response.status === 200) {
             localStorage.removeItem('cart');
             response.json().then(resp => {
-                navigate('/sale/confirm')
+                    navigate('/sale/confirm', {state:{orderNum: JSON.stringify(resp.message)}})
             });
         } else {
             alert('Erro ao finalizar o pedido, tente mais tarde!');
@@ -138,6 +102,7 @@ function PaymentInformationScreen() {
                     </> :
                     <>
                         <section className="container-login">
+                            <h3 style={{color: "green"}}>Total a pagar: {totalPrice}</h3>
                             <ul className="nav-links">
                                 <li><span onClick={() => setIsCard(true)} >Pagar com cartão</span></li>
                                 <li><span onClick={() => setIsCard(false)}>Pagar com boleto</span></li>
@@ -191,53 +156,6 @@ function PaymentInformationScreen() {
                                 </div>
                             </form>
                         </section>
-                        <main className="container-cart-product">
-                            <section className="cart-products-section">
-                                {products.map((data, index) => {
-                                    return (
-                                        <span className="products-cart-info">
-                                            <img className="cart-image" src={data.file} alt="Produto no carrinho" />
-                                            <span className="products-description">
-                                                <h2 className="product-title">{data.brand}</h2>
-                                                <p style={{ "fontSize": "22px", "color": "black", "marginBottom": "7%" }}>{data.nameProduct} </p>
-                                                <section className="infos">
-                                                    <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {data.cost} </p>
-                                                </section>
-                                            </span>
-                                        </span>
-                                    );
-                                })}
-                            </section>
-                            <section className="cart-products-info">
-                                <span className="short-desc-product-info">Resumo do carrinho: </span>
-                                <span className="total-products">
-                                    <p style={{ fontSize: "24px" }}>{products.length} produtos</p>
-                                    <p style={{ fontSize: "24px" }}>R$ {totalProductsCost}</p>
-                                </span>
-                                <hr />
-                                <span className="cart-sub-total">
-                                    <p><b>Total: </b></p>
-                                    <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice} </p>
-                                </span>
-                                <br />
-                                <section className="calculate-freight-section">
-                                    <p>Selecione o endereço para calcular frete: </p>
-                                    {
-                                        addresses.map((data) => {
-                                            return (
-                                                <>
-                                                    <section className="unit-freight">
-                                                        <p>{data.streetName} - {data.cep} </p>
-                                                        <button className="btn-calculate-freight" onClick={() => calculateFreight()}>Pesquisar fretes disponíveis</button>
-                                                    </section>
-                                                </>
-                                            );
-                                        })
-                                    }
-                                </section>
-                                <br />
-                            </section>
-                        </main>
                     </>
             }
         </>

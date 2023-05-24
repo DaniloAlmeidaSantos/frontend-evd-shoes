@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useEffect } from "react";
 import "./SellProductsScreen.css";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -13,34 +13,31 @@ function SellProductsScreen() {
     const [loading, setLoading] = useState(false);
     const [imageSelectedIndex, setImageSelectedIndex] = useState(0);
     const { id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getProductsForm();
     }, [])
 
     const handleInputCartProduct = () => {
-        let products = localStorage.getItem('cart');
+        let cart = localStorage.getItem('cart');
 
-        if (products == null) {
+        if (cart == null) {
             let newProducts = [];
             newProducts.push({ id: id, quantity: quantity });
-            localStorage.setItem('cart', JSON.stringify(newProducts));
+            localStorage.setItem('cart', JSON.stringify({products: newProducts, freight: "Sedex"}));
             alert("Produto adicionado ao carrinho!");
-            return;
+            navigate("/");
         }
 
-        products = JSON.parse(products)
+        cart = JSON.parse(cart);
 
-        for (let p of products) {
-            if (p.id === id && p.quantity === quantity) return;
-        }
-
-        let newProducts = [...products];
+        let newProducts = cart.products;
         newProducts.push({ id: id, quantity: quantity });
-        localStorage.setItem('cart', JSON.stringify(newProducts));
+        console.log(newProducts)
+        localStorage.setItem('cart', JSON.stringify({products: newProducts, freight: cart.freight}));
         alert("Produto adicionado ao carrinho!");
-        return;
-
+        navigate("/");
     }
 
     const changeSelectedImage = (index) => setImageSelectedIndex(index)

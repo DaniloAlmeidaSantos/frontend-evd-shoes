@@ -24,9 +24,19 @@ function HeaderComponent() {
                 <ul class="nav-links">
                     <li><a href="/">Páginal Inicial</a></li>
                     <li><a href="/">Produtos</a></li>
-                    <li><a href="/home-backoffice">Contato</a></li>
+
+                    {
+                        userInfo != null ?
+                            <>
+                                <li><a href="/orders">Meus pedidos</a></li>
+                            </> : <> </>
+                    }
+
                     {userInfo != null && userInfo.userType !== "CLIENTE" ?
-                        <li><a href="/home-backoffice">Backoffice</a></li>
+                        <>
+                            <li><a href="/update/orders">Atualizar status pedidos</a></li>
+                            <li><a href="/home-backoffice">Backoffice</a></li>
+                        </>
                         : <> </>
                     }
                     {userInfo == null ?
@@ -41,7 +51,7 @@ function HeaderComponent() {
                         <>
                             <li>
                                 <a href={`/product/cart`}>
-                                    <p className="count-items-cart">{cartProducts.length}</p>
+                                    <p className="count-items-cart">{cartProducts.products.length}</p>
                                     <FontAwesomeIcon size="2x" icon={faCartShopping} className="plus-cart" />
                                 </a>
                             </li>

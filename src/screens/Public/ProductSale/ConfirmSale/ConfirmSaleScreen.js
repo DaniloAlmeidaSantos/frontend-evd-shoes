@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
 import BuyFlowComponent from "../../../../components/BuyFlow/BuyFlowComponent";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ConfirmSaleScreen() {
+function ConfirmSaleScreen(props) {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <>
@@ -18,7 +19,8 @@ function ConfirmSaleScreen() {
                         </div>
                     </> :
                     <main className="container-cart-product" style={{display: "flex", flexDirection: "column"}}>
-                        <h1>Parabéns você realizou sua compra :) Retorne para nossa página inicial! </h1>
+                        <h2 style={{color: "green", fontSize: "24px"}}>Número do pedido: {location.state.orderNum} </h2>
+                        <h3 style={{color: "black"}}>Parabéns você realizou sua compra :) Retorne para nossa página inicial! </h3>
                         <div class="btnRegister">
                             <input type="submit" value="Voltar para tela inicial" onClick={() =>  navigate('/')}/>
                         </div>

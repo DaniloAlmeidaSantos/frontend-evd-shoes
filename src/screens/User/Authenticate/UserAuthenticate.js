@@ -243,11 +243,11 @@ function UserAuthenticate() {
                   <>
                     <AddressModal
                       addresses={addresses}
+                      type={"AUTH"}
                       show={showModal}
                       onHide={() => setShowModal(false)}
                     />
                   </> : <></>
-
                 }
               </div>
             </div>
