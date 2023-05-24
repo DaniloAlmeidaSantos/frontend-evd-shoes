@@ -1,15 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
-import Banner from "../../../components/Banner/BannerComponent";
-import CardProducts from "../../../components/card-products/CardProducts";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 function GetOrders() {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
-    const carousel = useRef(null);
 
 
     useEffect(() => {

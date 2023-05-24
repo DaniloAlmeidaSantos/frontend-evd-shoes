@@ -15,6 +15,7 @@ import PaymentInformationScreen from "./screens/Public/ProductSale/PaymentInform
 import ConfirmSaleScreen from "./screens/Public/ProductSale/ConfirmSale/ConfirmSaleScreen";
 import GetOrders from "./screens/Public/Orders/OrdersScreen";
 import OrderScreen from "./screens/Public/Orders/OrderScreen";
+import BackOfficeUpdateStatus from "./screens/Backoffice/BackofficeStockist/BackofficeUpdateStatus";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/sale/confirm" element={<ConfirmSaleScreen />} />
                 <Route path="/orders" element={<GetOrders />} /> 
                 <Route path="/orders/details/:id" element={<OrderScreen /> } />
+                <Route path="/update/orders" element={<BackOfficeUpdateStatus />} />
             </Routes>
         </div>
     );

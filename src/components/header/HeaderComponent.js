@@ -34,7 +34,7 @@ function HeaderComponent() {
 
                     {userInfo != null && userInfo.userType !== "CLIENTE" ?
                         <>
-                            <li><a href="/home-backoffice">Pedidos pendentes</a></li>
+                            <li><a href="/update/orders">Atualizar status pedidos</a></li>
                             <li><a href="/home-backoffice">Backoffice</a></li>
                         </>
                         : <> </>
