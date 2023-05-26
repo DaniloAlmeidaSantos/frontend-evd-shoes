@@ -9,8 +9,8 @@ function OrderScreen() {
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState('');
     const [productsPrice, setProductsPrice] = useState(0);
+    const [freight, setFreight] = useState(0);
     const navigate = useNavigate();
-
 
     useEffect(() => {
         getProducts();
@@ -20,7 +20,7 @@ function OrderScreen() {
         const response = await fetch(`https://backend-evd-api.herokuapp.com/products/orders/summary?id=${id}`);
         const user = JSON.parse(localStorage.getItem('userInfo'));
         setUserInfo(user);
-
+        let value = 0;
         if (response.status === 200) {
             response.json().then(res => {
                 setOrders(res);
@@ -29,8 +29,10 @@ function OrderScreen() {
                 for (let r of res) {
                     total = total + (r.unitPrice * r.quantity);
                 }
+                value = res[0].price - total;
                 setProductsPrice(total);
                 setLoading(false);
+                setFreight(value);
             });
         }
     }
@@ -93,6 +95,9 @@ function OrderScreen() {
                             <span className="total-products">
                                 <p style={{ fontSize: "24px" }}>{orders.length} produtos</p>
                                 <p style={{ fontSize: "24px" }}>R$ {productsPrice}</p>
+                                <p> + </p>
+                                <p style={{ fontSize: "24px" }}>Frete:</p>
+                                <p style={{ fontSize: "24px" }}>R$ {freight}</p>
                             </span>
                             <span className="total-products">
                                 <p style={{ fontSize: "14px" }}>Endereço de entrega: {orders[0].saleAddress}</p>
