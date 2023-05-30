@@ -16,6 +16,7 @@ import ConfirmSaleScreen from "./screens/Public/ProductSale/ConfirmSale/ConfirmS
 import GetOrders from "./screens/Public/Orders/OrdersScreen";
 import OrderScreen from "./screens/Public/Orders/OrderScreen";
 import BackOfficeUpdateStatus from "./screens/Backoffice/BackofficeStockist/BackofficeUpdateStatus";
+import BeforeSaleScreen from "./screens/Public/ProductSale/BeforeSale/BeforeSaleScreen";
 
 function App() {
     return (

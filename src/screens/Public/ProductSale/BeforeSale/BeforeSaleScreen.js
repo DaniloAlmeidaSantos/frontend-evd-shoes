@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from "react";
-import './ProductCart.css';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { useNavigate } from "react-router-dom";
-import Calculator from "../../../utils/CalculateFreight";
 
-function ProductCart() {
+function BeforeSaleScreen() {
     let productCart = localStorage.getItem('cart');
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [totalProductsCost, setTotalProductsCost] = useState(0);
     const [address, setAddress] = useState({});
-    const [showInputCep, setShowInputCep] = useState(false);
-    const [freight, setFreight] = useState(JSON.parse(productCart).freight);
-    const [idAddressDefault, setIdAddressDefault] = useState(0);
-    const [inputAddress, setInputAddress] = useState("");
-    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -31,7 +22,6 @@ function ProductCart() {
             if (response.status === 200) {
                 response.json().then(res => {
                     setAddress(res);
-                    setIdAddressDefault(res.idAddress);
                     let cart = productCart;
                     cart["address"] = res;
                     localStorage.removeItem('cart');
@@ -64,25 +54,17 @@ function ProductCart() {
                 for (let totalPrice of res) {
                     total = total + parseFloat(totalPrice.totalPrice);
                     setTotalPrice(total);
-                    setTotalProductsCost(total);
                 }
             });
         }
     }
 
-    const handleChangeRadioButton = (value, idAddress) => {
+    const handleFreight = (value) => {
         let cart = JSON.parse(productCart);
         localStorage.removeItem('cart');
         cart = { ...cart, freight: value };
-        cart = { ...cart, address: address };
         localStorage.setItem('cart', JSON.stringify(cart));
-        setFreight(value);
     }
-
-    const handleInputCepChange = (e) => {
-        const { value } = e.target;
-        setInputAddress(value);
-    };
 
     return (
         <>
@@ -94,6 +76,15 @@ function ProductCart() {
                         </div>
                     </> :
                     <main className="container-cart-product">
+
+                        <section classname="cart-products-section">
+                            <span classname="short-desc-product-info">Informações de usuário</span>
+                            <span className="total-products">
+                                        <p style={{ fontSize: "24px" }}>{userInfo.name}</p>
+                                        <p style={{ fontSize: "24px" }}>{userInfo.email}</p>
+                                    </span>
+                        </section>
+
                         <section className="cart-products-section">
                             {products.map((data, index) => {
                                 return (
@@ -104,16 +95,7 @@ function ProductCart() {
                                             <p style={{ "fontSize": "22px", "color": "black", "marginBottom": "7%" }}>{data.nameProduct} </p>
                                             <section className="infos">
                                                 <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>R$ </span> {data.cost} </p>
-                                                <section className="input-define-quantity">
-                                                    <input
-                                                        type="number"
-                                                        name={index}
-                                                        placeholder="Defina a quantidade deste produto"
-                                                        style={{ width: "70px" }}
-                                                        value={data.quantity}
-                                                        onChange={handleInputQuantityChange}
-                                                    />
-                                                </section>
+                                                
                                             </section>
                                         </span>
                                     </span>
@@ -138,7 +120,7 @@ function ProductCart() {
                             <hr />
                             <span className="cart-sub-total">
                                 <p><b>Sub-Total: </b></p>
-                                <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice + Calculator(freight)} </p>
+                                <p style={{ color: "green", fontSize: "24px" }}>R$ {totalPrice + handleFreight} </p>
                             </span>
                         </section>
                     </main>
@@ -148,4 +130,4 @@ function ProductCart() {
 
 }
 
-export default ProductCart;
+export default BeforeSaleScreen;
