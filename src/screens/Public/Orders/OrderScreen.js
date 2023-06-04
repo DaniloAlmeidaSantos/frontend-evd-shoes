@@ -17,7 +17,7 @@ function OrderScreen() {
     }, []);
 
     const getProducts = async () => {
-        const response = await fetch(`https://backend-evd-api.herokuapp.com/products/orders/summary?id=${id}`);
+        const response = await fetch(`http://localhost:8080/products/orders/summary?id=${id}`);
 
         if (response.status === 200) {
             response.json().then(res => {

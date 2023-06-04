@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Calculator from "../../utils/CalculateFreight";
+import "./CartSummaryComponent.css";
 
 function CartSummaryComponent(props) {
     const {
@@ -22,7 +23,9 @@ function CartSummaryComponent(props) {
     const [cartFreight, setCartFreight] = useState("");
     const [address, setAddress] = useState({});
     const [inputAddress, setInputAddress] = useState("");
-    const [showAddressUser, setShowAddressesUser] = useState(true);
+    const [inputNumber, setInputNumber] = useState("");
+    const [inputComplement, setInputComplement] = useState("");
+    const [showAddressUser, setShowAddressesUser] = useState(userInfo != null ? false : true);
     const [showInputCep, setShowInputCep] = useState(false);
     const navigate = useNavigate();
 
@@ -32,7 +35,6 @@ function CartSummaryComponent(props) {
             getAddresses();
             setCartFreight(JSON.parse(productCart).freight);
         }
-        console.log()
     }, []);
 
 
@@ -44,6 +46,7 @@ function CartSummaryComponent(props) {
 
             if (jsonResponse.erro) {
                 alert("CEP não encontrado, por favor revise o CEP enviado para consulta!");
+                return;
             }
 
             let address = {
@@ -65,9 +68,33 @@ function CartSummaryComponent(props) {
         }
     }
 
+    const handleChangeCartAddress = (key, value) => {
+        productCart = JSON.parse(productCart);
+        address[key] = value;
+        productCart["address"] = address;
+        localStorage.removeItem('cart');
+        localStorage.setItem('cart', JSON.stringify(productCart));
+    }
+
     const handleInputCepChange = (e) => {
-        const { value } = e.target;
-        setInputAddress(value);
+        const { value, name } = e.target;
+        // eslint-disable-next-line default-case
+        switch (name) {
+            case "complement":
+                setInputComplement(value);
+                break;
+            case "number":
+                setInputNumber(value);
+                break;
+            case "cep":
+                setInputAddress(value);
+                break;
+        }
+
+        if (name !== "cep") {
+            handleChangeCartAddress(name, value);
+        }
+        
     };
 
     const handleSearchAddressToUser = async () => {
@@ -81,7 +108,6 @@ function CartSummaryComponent(props) {
                     let cart = productCart;
                     cart = JSON.parse(cart);
                     cart["address"] = res;
-                    console.log(cart)
                     localStorage.removeItem('cart');
                     localStorage.setItem('cart', JSON.stringify(cart));
                 })
@@ -103,8 +129,7 @@ function CartSummaryComponent(props) {
     }
 
     const getAddresses = async () => {
-        if (userInfo != null && !productCart.address) {
-            console.log(userInfo.idUser);
+        if (userInfo && !productCart.address) {
             const response = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/user/address?id=${userInfo.idUser}`);
 
             if (response.status === 200) {
@@ -122,10 +147,14 @@ function CartSummaryComponent(props) {
     }
 
     const handleNavigate = () => {
-        if (userInfo !== null) {
-            navigate(link);
+        if (!address.number) {
+            alert("Campo número é obrigatório, favor preencher!")
         } else {
-            navigate("/user");
+            if (userInfo !== null) {
+                navigate(link);
+            } else {
+                navigate("/user");
+            }
         }
     }
 
@@ -161,7 +190,6 @@ function CartSummaryComponent(props) {
             {
                 typeSection === "cart" ?
                     <>
-                        <span className="short-desc-product-info">Resumo do carrinho: </span>
                         <span className="total-products">
                             <p style={{ fontSize: "24px" }}>{products.length} produtos</p>
                             <p style={{ fontSize: "24px" }}>R$ {productsPrice}</p>
@@ -236,11 +264,11 @@ function CartSummaryComponent(props) {
                                         }
                                     </> : <> </>
                             }
+                            <button className="btn-search-address" onClick={() => handleSearchAddressToUser()}>
+                                Escolher um endereço cadastrado
+                            </button>
                             <button className="btn-calculate-freight" onClick={() => setShowInputCep(!showInputCep)}>
                                 Adicionar endereço para frete
-                            </button>
-                            <button className="btn-calculate-freight" onClick={() => handleSearchAddressToUser()}>
-                                Escolher um endereço cadastrado
                             </button>
                             {
                                 showInputCep ?
@@ -251,12 +279,24 @@ function CartSummaryComponent(props) {
                                             <button className="btn-calculate-freight" onClick={() => handleSearchCEP(inputAddress)}>
                                                 Pesquisar
                                             </button>
-                                            <span style={{display: "flex", flexDirection: "row"}}>
-                                                <input type="text" name="number"  placeholder="Número"/>
-                                                <input 
-                                                    type="text" 
-                                                    name="complement"  
+                                            <span style={{ display: "flex", flexDirection: "row" }}>
+                                                <input
+                                                    type="text"
+                                                    name="number"
+                                                    placeholder="Número"
+                                                    maxLength={5}
+                                                    value={inputNumber || ''}
+                                                    onChange={handleInputCepChange}
+                                                    style={{ width: "100px" }}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="complement"
                                                     placeholder="Complemento"
+                                                    maxLength={100}
+                                                    value={inputComplement || ''}
+                                                    onChange={handleInputCepChange}
+                                                    style={{ width: "200px" }}
                                                 />
                                             </span>
                                         </label>
@@ -274,7 +314,7 @@ function CartSummaryComponent(props) {
                             <p style={{ fontSize: "24px" }}>R$ {productsPrice}</p>
                         </span>
                         <span className="total-products">
-                            <p style={{ fontSize: "24px" }}>Valor do frete: </p>
+                            <p style={{ fontSize: "24px" }}>Valor do frete ({orders[0].freight || 'Sedex'}): </p>
                             <p style={{ fontSize: "24px" }}>R$ {freight}</p>
                         </span>
                         <span className="total-products">
@@ -300,6 +340,10 @@ function CartSummaryComponent(props) {
                             }
                         </span>
                         <hr />
+                        <span className="cart-sub-total">
+                            <p><b>Método de pagamento: </b></p>
+                            <p style={{ color: "green", fontSize: "20px" }}>{orders[0].paymentMethod} </p>
+                        </span>
                         <span className="cart-sub-total">
                             <p><b>Total: </b></p>
                             <p style={{ color: "green", fontSize: "24px" }}>R$ {orders[0].price} </p>

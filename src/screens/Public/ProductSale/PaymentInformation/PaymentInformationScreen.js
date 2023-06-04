@@ -63,7 +63,7 @@ function PaymentInformationScreen() {
                     totalPrice: totalPrice,
                     idAddress: address.idAddress,
                     deliveryCompany: JSON.parse(productCart).freight,
-                    saleAddress: `${address.cep} - ${address.streetName}, ${address.number} - ${address.complement}`,
+                    saleAddress: `${address.cep} - ${address.streetName}, ${address.number}, ${address.complement || ''}`,
                     idPayment: isCard ? 1 : 2,
                     status: isCard ? "AGUARDANDO BOLETO" : "AGUARDANDO EMISSAO"
                 }
@@ -71,7 +71,7 @@ function PaymentInformationScreen() {
         }
        
         let response = await fetch(
-            'https://backend-evd-api.herokuapp.com/products/confirm/sell',
+            'http://localhost:8080/products/confirm/sell',
             {
                 method: 'POST',
                 body: JSON.stringify(jsonReq),

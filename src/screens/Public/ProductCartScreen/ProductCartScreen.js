@@ -134,7 +134,7 @@ function ProductCart() {
                             products={products}
                             typeSection={"cart"}
                             link={"/sale/details"}
-                            buttonValue={"Ir para pagamento"}
+                            buttonValue={"Continuar"}
                         />
                     </main>
             }

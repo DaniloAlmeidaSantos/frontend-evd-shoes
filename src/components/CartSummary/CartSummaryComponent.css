@@ -1,0 +1,10 @@
+.btn-search-address {
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-search-address:hover {
+    background-color: rgb(49, 95, 76);
+}
