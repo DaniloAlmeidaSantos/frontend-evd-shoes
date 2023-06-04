@@ -13,7 +13,7 @@ root.render(
   <BrowserRouter>
     <HeaderComponent />
       <App />
-    <FooterComponent />
+    {/* <FooterComponent /> */}
   </BrowserRouter>
 );  
 

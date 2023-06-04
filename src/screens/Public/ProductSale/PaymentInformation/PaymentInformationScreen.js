@@ -62,6 +62,7 @@ function PaymentInformationScreen() {
                     quantity: prod.quantity,
                     totalPrice: totalPrice,
                     idAddress: address.idAddress,
+                    deliveryCompany: JSON.parse(productCart).freight,
                     saleAddress: `${address.cep} - ${address.streetName}, ${address.number} - ${address.complement}`,
                     idPayment: isCard ? 1 : 2,
                     status: isCard ? "AGUARDANDO BOLETO" : "AGUARDANDO EMISSAO"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
 
 function GetOrders() {
@@ -13,7 +13,7 @@ function GetOrders() {
     }, []);
 
     const getProducts = async () => {
-        const data = await fetch(`https://backend-evd-api.herokuapp.com/products/orders?id=${userInfo.idUser}`);
+        const data = await fetch(`http://localhost:8080/products/orders?id=${userInfo.idUser}`);
         const getResults = await data.json();
         if (getResults !== null) {
             setProducts(getResults);
@@ -32,26 +32,23 @@ function GetOrders() {
                     </> :
                     <>
                         <main className="main-details-products">
-                            <h1>Meus Pedidos</h1>
+                            <h1>Pedidos realizados</h1>
                             <section className="cart-products-section">
                                 {products.map((data, index) => {
                                     return (
-                                        <span className="products-cart-info">
-                                            <img className="cart-image" src={data.file} alt="Produto no carrinho" />
+                                        <span className="orders-card">
                                             <span className="products-description">
-                                                <h2 className="product-title">{data.brand}</h2>
                                                 <p style={{ "fontSize": "26px", "color": "black", "marginBottom": "7%" }}>
-                                                    <b style={{ "fontSize": "28px" }}>Nome do produto: </b>
-                                                    {data.nameProduct}
+                                                    <b style={{ "fontSize": "28px" }}>Número do pedido: </b>
+                                                    {data.idSale}
                                                 </p>
                                                 <section className="infos">
-                                                    <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>Número do pedido: </span> {data.idSale} </p>
-                                                    <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>Preço total do pedido: R$ </span> {data.price} </p>
-                                                    <p style={{ "fontSize": "24px", color: "black" }}><span style={{ "fontSize": "26px" }}>Unidades vendida: </span> {data.quantity} </p>
-                                                    <p style={{ "fontSize": "18px", color: "red" }}><span style={{ "fontSize": "18px" }}>Data da venda: </span> <b>{data.date} </b></p>
-                                                    <p style={{ "fontSize": "18px", color: "red" }}><span style={{ "fontSize": "18px" }}>Status do pedido: </span> <b>{data.status} </b></p>
+                                                    <p style={{ "fontSize": "24px" }}><span style={{ "fontSize": "26px" }}>Transportadora: </span> {data.freight || 'Sedex'} </p>
+                                                    <p style={{ "fontSize": "24px", color: "black" }}><span style={{ "fontSize": "26px" }}>Valor total do pedido: </span> {data.totalPrice} </p>
+                                                    <p style={{ "fontSize": "18px", color: "red" }}><span style={{ "fontSize": "18px" }}>Data da venda: </span> <b>{data.orderDate} </b></p>
+                                                    <p style={{ "fontSize": "18px", color: "red" }}><span style={{ "fontSize": "18px" }}>Status do pedido: </span> <b>{data.orderStatus} </b></p>
                                                     <a href={`/orders/details/${data.idSale}`}>
-                                                        <p style={{"fontSize": "24px", color: "green"}}>Ver detalhes</p>
+                                                        <p className="btn-view-details">Ver detalhes / Alterar status</p>
                                                     </a>
                                                 </section>
                                             </span>

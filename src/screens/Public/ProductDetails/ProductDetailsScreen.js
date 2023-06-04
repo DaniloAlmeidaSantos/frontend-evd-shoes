@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ProductDetails.css"
-import greetingMessage from '../../../utils/HoursUtils'
 import ClipLoader from 'react-spinners/ClipLoader';
 import Banner from "../../../components/Banner/BannerComponent";
 import CardProducts from "../../../components/card-products/CardProducts";
@@ -11,22 +10,23 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 
 function ProductDetailsScreen() {
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const carousel = useRef(null);
 
 
     useEffect(() => {
-        setLoading(true);
         getProducts();
     }, []);
 
     const getProducts = async () => {
         const data = await fetch("https://backend-evd-api.herokuapp.com/backoffice/products/details");
-        const getResults = await data.json();
-        if (getResults !== null) {
-            setProducts(getResults);
-            setLoading(false);
-        }
+        data.json().then(data => {
+            if (data !== null) {
+                setProducts(data);
+                setLoading(false);
+            }
+        });
+        
     }
 
     const handleLeftClick = (e) => {
@@ -74,7 +74,7 @@ function ProductDetailsScreen() {
                         </div>
 
                         <section className="all-products-home">
-                            
+
                         </section>
 
                     </main>
