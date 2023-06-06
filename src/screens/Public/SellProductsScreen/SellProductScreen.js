@@ -33,8 +33,7 @@ function SellProductsScreen() {
         cart = JSON.parse(cart);
 
         let newProducts = cart.products;
-        newProducts.push({ id: id, quantity: quantity });
-        console.log(newProducts)
+        newProducts.push({ id: id, quantity: quantity }); //No java seria list.add(valor)
         localStorage.setItem('cart', JSON.stringify({products: newProducts, freight: cart.freight}));
         alert("Produto adicionado ao carrinho!");
         navigate("/");

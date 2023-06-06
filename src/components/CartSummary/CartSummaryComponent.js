@@ -81,9 +81,11 @@ function CartSummaryComponent(props) {
         // eslint-disable-next-line default-case
         switch (name) {
             case "complement":
+                handleChangeCartAddress(name, value);
                 setInputComplement(value);
                 break;
             case "number":
+                handleChangeCartAddress(name, value);
                 setInputNumber(value);
                 break;
             case "cep":
@@ -94,7 +96,7 @@ function CartSummaryComponent(props) {
         if (name !== "cep") {
             handleChangeCartAddress(name, value);
         }
-        
+
     };
 
     const handleSearchAddressToUser = async () => {
@@ -129,7 +131,7 @@ function CartSummaryComponent(props) {
     }
 
     const getAddresses = async () => {
-        if (userInfo && !productCart.address) {
+        if (userInfo && !JSON.parse(productCart).address) {
             const response = await fetch(`https://backend-evd-api.herokuapp.com/backoffice/user/address?id=${userInfo.idUser}`);
 
             if (response.status === 200) {
@@ -142,6 +144,7 @@ function CartSummaryComponent(props) {
                 })
             }
         } else {
+            setInputNumber(JSON.parse(productCart).address.number);
             setAddress(JSON.parse(productCart).address);
         }
     }
@@ -264,9 +267,15 @@ function CartSummaryComponent(props) {
                                         }
                                     </> : <> </>
                             }
-                            <button className="btn-search-address" onClick={() => handleSearchAddressToUser()}>
-                                Escolher um endereço cadastrado
-                            </button>
+                            {
+                                userInfo ?
+                                    <>
+                                        <button className="btn-search-address" onClick={() => handleSearchAddressToUser()}>
+                                            Escolher um endereço cadastrado
+                                        </button>
+                                    </> : <> </>
+                            }
+
                             <button className="btn-calculate-freight" onClick={() => setShowInputCep(!showInputCep)}>
                                 Adicionar endereço para frete
                             </button>
