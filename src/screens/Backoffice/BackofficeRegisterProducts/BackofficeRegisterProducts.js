@@ -40,12 +40,14 @@ function BackofficeProductsRegister() {
     setLoading(false);
   }
 
+  // Converte em base64
   const addImage = (file, name) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
+    let reader = new FileReader(); // Instancia objeto que fará a leitura da imagem
+    reader.readAsDataURL(file); // Ler a imagem
     reader.onload = function () {
       const nImages = [...images];
       nImages.push({ 'name': name, 'file': reader.result, 'fileDefault': "N" })
+      // No JAVA seria list.add(Object('name', file, ...))
       setImages(nImages);
       return;
     };
@@ -89,8 +91,6 @@ function BackofficeProductsRegister() {
       'productImages': images
     }
 
-    console.log(request);
-
     if (id != null) {
       response = await fetch(
         'https://backend-evd-api.herokuapp.com/backoffice/product/update',
@@ -132,7 +132,7 @@ function BackofficeProductsRegister() {
     if (name === 'ratio' && (value > 5 || value < 0)) {
       alert("Digite um valor para a avaliação entre 0 e 5!")
     } else {
-      setFormValues({ ...formValues, [name]: value });
+      setFormValues({ ...formValues, [name]: value }); // Atualiza ou adiciona um novo parâmetro
     }
   };
 

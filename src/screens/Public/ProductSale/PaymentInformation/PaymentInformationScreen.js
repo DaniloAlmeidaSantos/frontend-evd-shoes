@@ -53,6 +53,7 @@ function PaymentInformationScreen() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let jsonReq = [];
+        setLoading(true);
         const address = JSON.parse(productCart).address;
         for (let prod of products) {
             jsonReq.push(
@@ -64,14 +65,14 @@ function PaymentInformationScreen() {
                     idAddress: address.idAddress,
                     deliveryCompany: JSON.parse(productCart).freight,
                     saleAddress: `${address.cep} - ${address.streetName}, ${address.number}, ${address.complement || ''}`,
-                    idPayment: isCard ? 1 : 2,
-                    status: isCard ? "AGUARDANDO BOLETO" : "AGUARDANDO EMISSAO"
+                    idPayment: isCard ? 2 : 1,
+                    status: "AGUARDANDO PAGAMENTO"
                 }
             )
         }
-       
+
         let response = await fetch(
-            'http://localhost:8080/products/confirm/sell',
+            'https://backend-evd-api.herokuapp.com/products/confirm/sell',
             {
                 method: 'POST',
                 body: JSON.stringify(jsonReq),
@@ -84,8 +85,9 @@ function PaymentInformationScreen() {
         if (response.status === 200) {
             localStorage.removeItem('cart');
             response.json().then(resp => {
-                    navigate('/sale/confirm', {state:{orderNum: JSON.stringify(resp.message)}})
+                navigate('/sale/confirm', { state: { orderNum: JSON.stringify(resp.message) } })
             });
+            setLoading(false);
         } else {
             alert('Erro ao finalizar o pedido, tente mais tarde!');
         }
@@ -103,7 +105,7 @@ function PaymentInformationScreen() {
                     </> :
                     <>
                         <section className="container-login">
-                            <h3 style={{color: "green"}}>Total a pagar: {totalPrice}</h3>
+                            <h3 style={{ color: "green" }}>Total a pagar: {totalPrice}</h3>
                             <ul className="nav-links">
                                 <li><span onClick={() => setIsCard(true)} >Pagar com cartão</span></li>
                                 <li><span onClick={() => setIsCard(false)}>Pagar com boleto</span></li>
@@ -153,7 +155,7 @@ function PaymentInformationScreen() {
                                     </>
                                 }
                                 <div class="btnRegister">
-                                    <input type="submit" value="Finalizar pagamento"/>
+                                    <input type="submit" value="Finalizar pagamento" />
                                 </div>
                             </form>
                         </section>

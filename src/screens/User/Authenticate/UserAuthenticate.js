@@ -121,7 +121,7 @@ function UserAuthenticate() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    setFormValues({ ...formValues, [name]: value }); // Atualiza ou Adiciona um parâmetro ao objeto
   };
 
   const handleSelectChange = (e) => {
