@@ -42,12 +42,11 @@ function BackofficeProductsRegister() {
 
   // Converte em base64
   const addImage = (file, name) => {
-    let reader = new FileReader(); // Instancia objeto que fará a leitura da imagem
-    reader.readAsDataURL(file); // Ler a imagem
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
     reader.onload = function () {
       const nImages = [...images];
       nImages.push({ 'name': name, 'file': reader.result, 'fileDefault': "N" })
-      // No JAVA seria list.add(Object('name', file, ...))
       setImages(nImages);
       return;
     };
